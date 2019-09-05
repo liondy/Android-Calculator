@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:id="@+id/group_file">
+        <item
+            android:icon="@drawable/ic_save_black_24dp"
+            android:id="@+id/save_menu"
+            android:title="@string/save_label" />
+        <item
+            android:icon="@drawable/ic_folder_open_black_24dp"
+            android:id="@+id/load_menu"
+            android:title="@string/load_label" />
+    </group>
+    <group android:id="@+id/group_app">
+        <item
+            android:icon="@drawable/ic_info_outline_black_24dp"
+            android:id="@+id/about_menu"
+            android:title="@string/about_label" />
+        <item
+            android:icon="@drawable/ic_exit_to_app_black_24dp"
+            android:id="@+id/exit_menu"
+            android:title="@string/exit_label" />
+    </group>
+</menu>

@@ -18,7 +18,7 @@ public class MainActivity extends AppCompatActivity {
 
         window.setStatusBarColor(this.getResources().getColor(R.color.colorPrimaryDark));
 
-        Toolbar toolbar = this.findViewById(R.id.toolbar_main);
+        Toolbar toolbar = this.findViewById(R.id.toolbar);
 
         this.setSupportActionBar(toolbar);
 
@@ -27,5 +27,6 @@ public class MainActivity extends AppCompatActivity {
         ActionBarDrawerToggle toggle =  new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.app_name, R.string.app_name);
 
         drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
     }
 }
