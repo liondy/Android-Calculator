@@ -4,4 +4,9 @@
     <string name="load_label">Load</string>
     <string name="about_label">About Us</string>
     <string name="exit_label">Exit</string>
+    <string name="add_operand_label">Add Operand</string>
+    <string name="operator_label">Operator</string>
+    <string name="operand_label">Operand</string>
+    <string name="ok_label">OK</string>
+    <string name="cancel_label">Cancel</string>
 </resources>
