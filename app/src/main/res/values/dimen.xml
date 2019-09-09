@@ -2,9 +2,11 @@
 <resources>
     <dimen name="navigation_menu_width">240dp</dimen>
     <dimen name="spacer_width">24dp</dimen>
+    <dimen name="half_spacer_width">12dp</dimen>
     <dimen name="content_padding">16dp</dimen>
     <dimen name="calc_size">36sp</dimen>
     <dimen name="title_size">24sp</dimen>
     <dimen name="subtitle_size">16sp</dimen>
     <dimen name="spacing_margin">8dp</dimen>
+    <dimen name="zero">0dp</dimen>
 </resources>

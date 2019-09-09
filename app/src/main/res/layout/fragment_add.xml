@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     android:layout_width="match_parent"
     android:orientation="vertical"
+    android:minWidth="350dp"
     android:padding="@dimen/content_padding">
     <TextView
         android:layout_width="match_parent"
@@ -29,7 +30,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:id="@+id/operator" />
+            android:minHeight="24sp"
+            android:textAlignment="center"
+            android:id="@+id/operator_list" />
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -61,11 +64,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="top|right"
+            android:theme="@style/ButtonPrimaryTheme"
             android:text="@string/ok_label" />
+        <Space
+            android:layout_width="@dimen/half_spacer_width"
+            android:layout_height="match_parent" />
         <com.google.android.material.button.MaterialButton
             android:id="@+id/cancel_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:theme="@style/ButtonPrimaryTheme"
             android:text="@string/cancel_label" />
     </LinearLayout>
 </LinearLayout>

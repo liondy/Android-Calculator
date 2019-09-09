@@ -9,4 +9,13 @@
     <string name="operand_label">Operand</string>
     <string name="ok_label">OK</string>
     <string name="cancel_label">Cancel</string>
+
+    <string name="operand_fragment_label">Operand Fragment</string>
+
+    <string-array name="operator_array">
+        <item name="plus">+</item>
+        <item name="minus">-</item>
+        <item name="kali">*</item>
+        <item name="bagi">/</item>
+    </string-array>
 </resources>

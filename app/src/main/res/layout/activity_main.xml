@@ -14,7 +14,11 @@
 
         <include layout="@layout/navigation_menu_bar" />
 
-        <include layout="@layout/fragment_main"
+        <fragment
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:id="@+id/main_fragment"
+            android:name="com.example.calculatingwombat.fragments.MainFragment"
             app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
