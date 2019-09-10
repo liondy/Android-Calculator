@@ -4,6 +4,7 @@
     <dimen name="spacer_width">24dp</dimen>
     <dimen name="half_spacer_width">12dp</dimen>
     <dimen name="content_padding">16dp</dimen>
+    <dimen name="half_content_padding">8dp</dimen>
     <dimen name="calc_size">36sp</dimen>
     <dimen name="title_size">24sp</dimen>
     <dimen name="subtitle_size">16sp</dimen>

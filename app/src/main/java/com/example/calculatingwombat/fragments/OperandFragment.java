@@ -10,19 +10,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.calculatingwombat.R;
 import com.example.calculatingwombat.interfaces.CalculatorActivity;
 import com.example.calculatingwombat.model.Operand;
+import com.example.calculatingwombat.model.utils.ShuntingYard;
 
-import java.util.regex.Pattern;
+import java.util.EmptyStackException;
+import java.util.InputMismatchException;
 
 public class OperandFragment extends DialogFragment implements View.OnClickListener {
     Spinner operatorList;
-    TextView operand;
+    EditText operand;
     Button okButton;
     Button cancelButton;
 
@@ -40,9 +42,9 @@ public class OperandFragment extends DialogFragment implements View.OnClickListe
         this.operatorList = view.findViewById(R.id.operator_list);
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this.getActivity(),
-                R.array.operator_array, android.R.layout.simple_spinner_item);
+                R.array.operator_array, R.layout.spinner_layout);
 
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adapter.setDropDownViewResource(R.layout.spinner_layout);
 
         this.operatorList.setAdapter(adapter);
 
@@ -72,94 +74,41 @@ public class OperandFragment extends DialogFragment implements View.OnClickListe
     }
 
     private void handleOKButton() {
-        boolean valid = this.checkOperandValidity();
+        try {
+            String orig = this.operand.getText().toString();
+            String expression = this.convertToPostfix();
+            String symbol = this.operatorList.getSelectedItem().toString();
 
-        if (valid) {
-            String expression = this.operand.getText().toString();
-
-            Operand newOperand = new Operand(this.operatorList.getSelectedItem().toString(), expression);
+            Operand newOperand = new Operand(symbol, orig, expression);
 
             try {
-                newOperand.calculate();
+                newOperand.calculateResult();
 
-                this.activity.addOperand(newOperand);
+                if (newOperand.getCurrentValue() == 0 && symbol.equals("/")) {
+                    this.showDivideByZeroToast();
+                } else {
+                    this.activity.addOperand(newOperand);
 
-                this.dismiss();
+                    this.dismiss();
+                }
             } catch (ArithmeticException err) {
                 this.showDivideByZeroToast();
+            } catch (EmptyStackException err) {
+                this.showErrorToast();
             }
-        } else {
+        } catch (InputMismatchException err) {
             this.showErrorToast();
         }
     }
 
-    private boolean checkOperandValidity() {
+    private String convertToPostfix() {
         String expression = this.operand.getText().toString();
 
-        expression = expression.replace(" +", "");
+        expression = expression.replace("\\s+", "");
 
-        if (Pattern.matches("[^0-9+-/*^()]", expression) || expression.isEmpty()) {
-            return false;
-        } else {
-            boolean number = true;
-            int it = 0;
-            int parentheses = 0;
-            char last = expression.charAt(it);
-            int len = expression.length();
-            while (it < len) {
-                char eval = expression.charAt(it);
-                if (eval == '(') {
-                    if (!number) {
-                        return false;
-                    } else
-                        parentheses++;
-                    it++;
-                } else if (eval == ')') {
-                    if(parentheses == 0 || !this.isNumber(last)) {
-                        return false;
-                    }
-                    else parentheses--;
-                    it++;
-                } else {
-                    if (this.isNumber(eval)) {
-                        if(!number) {
-                            return false;
-                        } else {
-                            it = this.getNumberLimit(expression, it);
-                            number = false;
-                        }
-                    } else {
-                        if (number) {
-                            return false;
-                        } else {
-                            it++;
-                            number = true;
-                        }
-                    }
+        ShuntingYard syParser = new ShuntingYard(expression);
 
-                    last = eval;
-                }
-            }
-
-            if (!this.isNumber(last) || parentheses != 0) {
-                return false;
-            }
-
-            return true;
-        }
-    }
-
-    private int getNumberLimit(String expression, int idx) {
-        int end = idx + 1;
-        int len = expression.length();
-        while(end < len && this.isNumber(expression.charAt(end)))
-            end++;
-
-        return end;
-    }
-
-    private boolean isNumber(char num) {
-        return num >= 48 && num <= 57;
+        return syParser.evaluate();
     }
 
     private void showErrorToast() {
@@ -189,7 +138,7 @@ public class OperandFragment extends DialogFragment implements View.OnClickListe
         if (context instanceof CalculatorActivity) {
             this.activity = (CalculatorActivity)context;
         } else {
-            throw new ClassCastException("HAHAHAH");
+            throw new ClassCastException(context.toString() + " must implement CalculatorActivity.");
         }
     }
 

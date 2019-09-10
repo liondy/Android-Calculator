@@ -7,17 +7,19 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentManager;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Window;
 
 import com.example.calculatingwombat.fragments.MainFragment;
 import com.example.calculatingwombat.fragments.OperandFragment;
 import com.example.calculatingwombat.interfaces.CalculatorActivity;
 import com.example.calculatingwombat.model.Operand;
+import com.example.calculatingwombat.presenter.CalculatorPresenter;
 
 public class MainActivity extends AppCompatActivity implements CalculatorActivity {
     FragmentManager fragmentManager;
     MainFragment mainFragment;
+
+    CalculatorPresenter calculatorPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +31,7 @@ public class MainActivity extends AppCompatActivity implements CalculatorActivit
         this.fragmentManager = this.getSupportFragmentManager();
 
         this.mainFragment = MainFragment.createMainFragment();
+        this.calculatorPresenter = new CalculatorPresenter(this);
     }
 
     @Override
@@ -41,7 +44,12 @@ public class MainActivity extends AppCompatActivity implements CalculatorActivit
 
     @Override
     public void addOperand(Operand newOperand) {
-        Log.v("operand", Double.toString(newOperand.getTotalValue()));
+        this.calculatorPresenter.addOperands(newOperand);
+    }
+
+    @Override
+    public void addOperandToView(Operand newOperand) {
+        this.mainFragment.addNewOperand(newOperand);
     }
 
     @Override

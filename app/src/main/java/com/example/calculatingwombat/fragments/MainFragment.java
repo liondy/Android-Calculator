@@ -1,18 +1,23 @@
 package com.example.calculatingwombat.fragments;
 
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.calculatingwombat.R;
+import com.example.calculatingwombat.adapters.OperandAdapter;
 import com.example.calculatingwombat.interfaces.CalculatorActivity;
+import com.example.calculatingwombat.model.Operand;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 /**
@@ -21,6 +26,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 public class MainFragment extends Fragment implements View.OnClickListener {
     FloatingActionButton addButton;
     RecyclerView operandList;
+
+    OperandAdapter operandAdapter;
 
     CalculatorActivity listener;
 
@@ -32,12 +39,20 @@ public class MainFragment extends Fragment implements View.OnClickListener {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_main, container);
+        View view = inflater.inflate(R.layout.fragment_main, container, false);
 
         this.addButton = view.findViewById(R.id.add_button);
         this.operandList = view.findViewById(R.id.operand_list);
 
+        this.operandAdapter = new OperandAdapter();
+
+        this.operandList.setAdapter(this.operandAdapter);
+
         this.addButton.setOnClickListener(this);
+
+        if (this.operandList == null) {
+            Log.d("operandList", null);
+        }
 
         return view;
     }
@@ -62,8 +77,12 @@ public class MainFragment extends Fragment implements View.OnClickListener {
         }
     }
 
-    public void setViewAdapter(RecyclerView.Adapter adapter) {
-        this.operandList.setAdapter(adapter);
+
+    public void addNewOperand(Operand newOperand) {
+        System.out.println(this.listener.toString());
+        System.out.println(this.operandAdapter.toString());
+
+        this.operandAdapter.addOperand(newOperand);
     }
 
     public static MainFragment createMainFragment() {
