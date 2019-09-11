@@ -15,6 +15,14 @@
         android:text="000.000"
         android:layout_marginBottom="@dimen/spacing_margin" />
 
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/operand_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_below="@id/calculator_result" />
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -25,12 +33,5 @@
         android:theme="@style/ButtonPrimaryTheme"
         app:borderWidth="@dimen/zero"
         app:elevation="@dimen/zero" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/operand_list"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_below="@id/calculator_result" />
 </RelativeLayout>
 

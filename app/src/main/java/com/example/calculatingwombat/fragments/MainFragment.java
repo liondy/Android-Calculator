@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 
 import com.example.calculatingwombat.R;
 import com.example.calculatingwombat.adapters.OperandAdapter;
@@ -41,13 +42,14 @@ public class MainFragment extends Fragment implements View.OnClickListener {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_main, container, false);
 
-        this.addButton = view.findViewById(R.id.add_button);
         this.operandList = view.findViewById(R.id.operand_list);
 
         this.operandAdapter = new OperandAdapter();
 
         this.operandList.setAdapter(this.operandAdapter);
+        this.operandList.setLayoutManager(new LinearLayoutManager(getContext()));
 
+        this.addButton = view.findViewById(R.id.add_button);
         this.addButton.setOnClickListener(this);
 
         if (this.operandList == null) {
@@ -81,7 +83,6 @@ public class MainFragment extends Fragment implements View.OnClickListener {
     public void addNewOperand(Operand newOperand) {
         System.out.println(this.listener.toString());
         System.out.println(this.operandAdapter.toString());
-
         this.operandAdapter.addOperand(newOperand);
     }
 
