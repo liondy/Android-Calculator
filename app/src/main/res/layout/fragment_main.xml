@@ -15,7 +15,6 @@
         android:text="000.000"
         android:layout_marginBottom="@dimen/spacing_margin" />
 
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/operand_list"
         android:layout_width="match_parent"

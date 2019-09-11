@@ -44,7 +44,7 @@ public class MainFragment extends Fragment implements View.OnClickListener {
 
         this.operandList = view.findViewById(R.id.operand_list);
 
-        this.operandAdapter = new OperandAdapter();
+        this.operandAdapter = new OperandAdapter(this.listener);
 
         this.operandList.setAdapter(this.operandAdapter);
         this.operandList.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -81,14 +81,6 @@ public class MainFragment extends Fragment implements View.OnClickListener {
 
 
     public void addNewOperand(Operand newOperand) {
-        System.out.println(this.listener.toString());
-        System.out.println(this.operandAdapter.toString());
         this.operandAdapter.addOperand(newOperand);
-    }
-
-    public static MainFragment createMainFragment() {
-        MainFragment fragment = new MainFragment();
-
-        return fragment;
     }
 }

@@ -30,11 +30,8 @@ public class MainActivity extends AppCompatActivity implements CalculatorActivit
         this.setupToolbar();
 
         this.fragmentManager = this.getSupportFragmentManager();
-        //FragmentTransaction ft = this.fragmentManager.beginTransaction();
 
         this.mainFragment = (MainFragment) this.fragmentManager.findFragmentById(R.id.main_fragment);
-
-        //ft.add(R.id.main_fragment,this.mainFragment).addToBackStack(null).commit();
 
         this.calculatorPresenter = new CalculatorPresenter(this);
     }
@@ -42,7 +39,6 @@ public class MainActivity extends AppCompatActivity implements CalculatorActivit
     @Override
     public void showOperandDialog() {
         String tag = this.getResources().getString(R.string.operand_fragment_label);
-        Log.i("tag", "showOperandDialog: ");
         OperandFragment operandFragment = OperandFragment.createOperandFragment();
         operandFragment.show(this.fragmentManager, tag);
     }
@@ -59,6 +55,11 @@ public class MainActivity extends AppCompatActivity implements CalculatorActivit
 
     @Override
     public void removeOperand(int index) {
+
+    }
+
+    @Override
+    public void swapOperand(int idx1, int idx2) {
 
     }
 

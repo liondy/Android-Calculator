@@ -8,17 +8,22 @@ import android.view.ViewGroup;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.calculatingwombat.R;
+import com.example.calculatingwombat.adapters.helper.ItemTouchHelperAdapter;
 import com.example.calculatingwombat.adapters.holder.OperandHolder;
+import com.example.calculatingwombat.interfaces.CalculatorActivity;
 import com.example.calculatingwombat.model.Operand;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
-public class OperandAdapter extends RecyclerView.Adapter<OperandHolder> {
+public class OperandAdapter extends RecyclerView.Adapter<OperandHolder> implements ItemTouchHelperAdapter  {
     private List<Operand> operandList;
+    private CalculatorActivity activity;
 
-    public OperandAdapter() {
+    public OperandAdapter(CalculatorActivity activity) {
         this.operandList = new ArrayList<>();
+        this.activity = activity;
     }
 
     public void addOperand(Operand operand) {
@@ -50,5 +55,14 @@ public class OperandAdapter extends RecyclerView.Adapter<OperandHolder> {
     @Override
     public int getItemCount() {
         return this.operandList.size();
+    }
+
+    @Override
+    public void onItemMove(int from, int to) {
+        Collections.swap(this.operandList, from, to);
+
+        this.activity.swapOperand(from, to);
+
+        this.
     }
 }
