@@ -1,7 +1,9 @@
 package com.example.calculatingwombat.adapters.holder;
 
+import android.media.Image;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -12,7 +14,7 @@ import com.example.calculatingwombat.model.Operand;
 public class OperandHolder extends RecyclerView.ViewHolder {
     private TextView operandResult;
     private TextView operandString;
-    private Button deleteButton;
+    private ImageButton deleteButton;
 
     public OperandHolder(View view) {
         super(view);
