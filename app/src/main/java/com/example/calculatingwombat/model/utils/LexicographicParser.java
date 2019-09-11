@@ -16,6 +16,7 @@ public class LexicographicParser {
     private static final int MINUS = 2;
     private static final int MULTIPLY = 3;
     private static final int DIVIDE = 4;
+    private static final int POWER = 10;
     private static final int CONSTANT = 5;
     private static final int LEFT = 7;
     private static final int RIGHT = 8;
@@ -27,6 +28,7 @@ public class LexicographicParser {
         put("-", MINUS);
         put("*", MULTIPLY);
         put("/", DIVIDE);
+        put("^", POWER);
         put("(", LEFT);
         put(")", RIGHT);
     }};

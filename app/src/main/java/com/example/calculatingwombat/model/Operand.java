@@ -1,6 +1,5 @@
 package com.example.calculatingwombat.model;
 
-import java.util.EmptyStackException;
 import java.util.Stack;
 
 public class Operand {
@@ -61,7 +60,8 @@ public class Operand {
             case '+': return first + second;
             case '-': return first - second;
             case '*': return first * second;
-            default: return first / second;
+            case '/': return first / second;
+            default: return Math.pow(first, second);
         }
     }
 

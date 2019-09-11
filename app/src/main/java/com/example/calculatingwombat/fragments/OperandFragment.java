@@ -1,10 +1,14 @@
 package com.example.calculatingwombat.fragments;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.fragment.app.DialogFragment;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +34,8 @@ public class OperandFragment extends DialogFragment implements View.OnClickListe
 
     CalculatorActivity activity;
 
+    boolean err;
+
     public OperandFragment() {
         // Required empty public constructor
     }
@@ -54,6 +60,27 @@ public class OperandFragment extends DialogFragment implements View.OnClickListe
 
         this.okButton.setOnClickListener(this);
         this.cancelButton.setOnClickListener(this);
+
+        this.err = false;
+
+        this.operand.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void afterTextChanged(Editable s) {}
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start,
+                                          int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start,
+                                      int before, int count) {
+                if (err) {
+                    err = false;
+                    changeOperandTint();
+                }
+            }
+        });
 
         return view;
     }
@@ -86,6 +113,7 @@ public class OperandFragment extends DialogFragment implements View.OnClickListe
 
                 if (newOperand.getCurrentValue() == 0 && symbol.equals("/")) {
                     this.showDivideByZeroToast();
+                    this.err = true;
                 } else {
                     this.activity.addOperand(newOperand);
 
@@ -93,12 +121,17 @@ public class OperandFragment extends DialogFragment implements View.OnClickListe
                 }
             } catch (ArithmeticException err) {
                 this.showDivideByZeroToast();
+                this.err = true;
             } catch (EmptyStackException err) {
                 this.showErrorToast();
+                this.err = true;
             }
         } catch (InputMismatchException err) {
             this.showErrorToast();
+            this.err = true;
         }
+
+        this.changeOperandTint();
     }
 
     private String convertToPostfix() {
@@ -109,6 +142,14 @@ public class OperandFragment extends DialogFragment implements View.OnClickListe
         ShuntingYard syParser = new ShuntingYard(expression);
 
         return syParser.evaluate();
+    }
+
+    private void changeOperandTint() {
+        if (this.err) {
+            this.operand.setBackgroundTintList(ColorStateList.valueOf(this.getResources().getColor(R.color.colorError)));
+        } else {
+            this.operand.setBackgroundTintList(ColorStateList.valueOf(this.getResources().getColor(R.color.colorPrimary)));
+        }
     }
 
     private void showErrorToast() {

@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class OperandAdapter extends RecyclerView.Adapter<OperandHolder> implements ItemTouchHelperAdapter  {
+public class OperandAdapter extends RecyclerView.Adapter<OperandHolder>  {
     private List<Operand> operandList;
     private CalculatorActivity activity;
 
@@ -55,14 +55,5 @@ public class OperandAdapter extends RecyclerView.Adapter<OperandHolder> implemen
     @Override
     public int getItemCount() {
         return this.operandList.size();
-    }
-
-    @Override
-    public void onItemMove(int from, int to) {
-        Collections.swap(this.operandList, from, to);
-
-        this.activity.swapOperand(from, to);
-
-        this.
     }
 }
