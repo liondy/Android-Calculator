@@ -77,6 +77,10 @@ public class Operand {
         return this.origOperand;
     }
 
+    public String getOperator() {
+        return this.operator;
+    }
+
     private boolean isDouble(String test) {
         try {
             double d = Double.parseDouble(test);

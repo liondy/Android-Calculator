@@ -14,6 +14,7 @@ import com.example.calculatingwombat.model.Operand;
 public class OperandHolder extends RecyclerView.ViewHolder {
     private TextView operandResult;
     private TextView operandString;
+    private TextView operatorSymbol;
     private ImageButton deleteButton;
 
     public OperandHolder(View view) {
@@ -21,11 +22,13 @@ public class OperandHolder extends RecyclerView.ViewHolder {
 
         this.operandResult = view.findViewById(R.id.operand_result);
         this.operandString = view.findViewById(R.id.operand_string);
+        this.operatorSymbol = view.findViewById(R.id.operator_symbol);
         this.deleteButton = view.findViewById(R.id.operand_delete);
     }
 
     public void setText(Operand operand) {
         this.operandResult.setText(Double.toString(operand.getTotalValue()));
         this.operandString.setText(operand.getOperand());
+        this.operatorSymbol.setText("(" + operand.getOperator() + ")");
     }
 }
