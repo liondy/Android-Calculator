@@ -1,3 +1,9 @@
+/**
+ * Mengenang penderitaan saya dalam mengerjakan hal gila
+ * Tapi tidak sesuai spec....
+ */
+
+
 package com.example.calculatingwombat.model.utils;
 
 import java.io.BufferedReader;
@@ -7,6 +13,7 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StreamTokenizer;
 
+@Deprecated
 public class LexicographicParser {
     private StreamTokenizer st;
 
@@ -16,6 +23,7 @@ public class LexicographicParser {
     private static final int MINUS = 2;
     private static final int MULTIPLY = 3;
     private static final int DIVIDE = 4;
+    private static final int POWER = 10;
     private static final int CONSTANT = 5;
     private static final int LEFT = 7;
     private static final int RIGHT = 8;
@@ -27,6 +35,7 @@ public class LexicographicParser {
         put("-", MINUS);
         put("*", MULTIPLY);
         put("/", DIVIDE);
+        put("^", POWER);
         put("(", LEFT);
         put(")", RIGHT);
     }};

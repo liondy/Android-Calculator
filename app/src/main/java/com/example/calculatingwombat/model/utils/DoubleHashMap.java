@@ -1,7 +1,14 @@
+/**
+ * Mengenang penderitaan saya dalam mengerjakan hal gila
+ * Tapi tidak sesuai spec....
+ */
+
+
 package com.example.calculatingwombat.model.utils;
 
 import java.util.HashMap;
 
+@Deprecated
 public class DoubleHashMap<K, V> extends HashMap<K, V> {
     private HashMap<V, K> reversed = new HashMap<V, K>();
 

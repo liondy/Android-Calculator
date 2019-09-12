@@ -1,3 +1,8 @@
+/**
+ * Mengenang penderitaan saya dalam mengerjakan hal gila
+ * Tapi tidak sesuai spec....
+ */
+
 package com.example.calculatingwombat.model.utils;
 
 import java.io.ByteArrayInputStream;
@@ -6,6 +11,7 @@ import java.util.InputMismatchException;
 import java.util.Map;
 import java.util.Stack;
 
+@Deprecated
 public class ShuntingYard {
     private StringBuilder output;
     private Stack<String> stack;
@@ -17,7 +23,8 @@ public class ShuntingYard {
         ADD(3, Operator.LEFT),
         SUBTRACT(3, Operator.LEFT),
         MULTIPLY(4, Operator.LEFT),
-        DIVIDE(4, Operator.LEFT);
+        DIVIDE(4, Operator.LEFT),
+        POWER(5, Operator.LEFT);
 
         static final int LEFT = 0;
         static final int RIGHT = 1;
@@ -36,6 +43,7 @@ public class ShuntingYard {
         put("-", Operator.SUBTRACT);
         put("*", Operator.MULTIPLY);
         put("/", Operator.DIVIDE);
+        put("^", Operator.POWER);
     }};
 
     public ShuntingYard(String expression) {
@@ -55,12 +63,16 @@ public class ShuntingYard {
         while ((id = lexer.nextSymbol()) != LexicographicParser.EOF) {
             token = lexer.stringify(id);
 
+            if (token == null) {
+                continue;
+            }
+
             if (LexicographicParser.isNumber(token)) {
                 output.append(token).append(' ');
             }
 
             if (this.isOperator(token)) {
-                while (!stack.isEmpty() && this.isOperator(stack.peek()) && this.isHigerPrec(token)) {
+                while (!stack.isEmpty() && this.isOperator(stack.peek()) && this.isHigherPrec(token)) {
                     output.append(stack.pop()).append(' ');
                 }
 
@@ -98,7 +110,7 @@ public class ShuntingYard {
         return output.toString();
     }
 
-    private boolean isHigerPrec(String token) {
+    private boolean isHigherPrec(String token) {
         return isLeftAssociative(token) && precedence(token) <= precedence(stack.peek()) || isRightAssociative(token) && precedence(token) < precedence(stack.peek());
     }
 

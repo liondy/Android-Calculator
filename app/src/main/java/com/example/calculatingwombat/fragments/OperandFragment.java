@@ -1,10 +1,14 @@
 package com.example.calculatingwombat.fragments;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.fragment.app.DialogFragment;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,8 +31,9 @@ public class OperandFragment extends DialogFragment implements View.OnClickListe
     EditText operand;
     Button okButton;
     Button cancelButton;
-
     CalculatorActivity activity;
+
+    boolean err;
 
     public OperandFragment() {
         // Required empty public constructor
@@ -55,6 +60,27 @@ public class OperandFragment extends DialogFragment implements View.OnClickListe
         this.okButton.setOnClickListener(this);
         this.cancelButton.setOnClickListener(this);
 
+        this.err = false;
+
+        this.operand.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void afterTextChanged(Editable s) {}
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start,
+                                          int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start,
+                                      int before, int count) {
+                if (err) {
+                    err = false;
+                    changeOperandTint();
+                }
+            }
+        });
+
         return view;
     }
 
@@ -74,51 +100,27 @@ public class OperandFragment extends DialogFragment implements View.OnClickListe
     }
 
     private void handleOKButton() {
-        try {
-            String orig = this.operand.getText().toString();
-            String expression = this.convertToPostfix();
-            String symbol = this.operatorList.getSelectedItem().toString();
+        String operand = this.operand.getText().toString();
+        String operator = this.operatorList.getSelectedItem().toString();
 
-            Operand newOperand = new Operand(symbol, orig, expression);
+        if (operator.equals("/") && Double.parseDouble(operand) == 0) {
+            this.showDivideByZeroToast();
+            this.err = true;
+            this.changeOperandTint();
+        } else {
+            Operand newOperand = new Operand(operator, operand);
+            this.activity.addOperand(newOperand);
 
-            try {
-                newOperand.calculateResult();
-
-                if (newOperand.getCurrentValue() == 0 && symbol.equals("/")) {
-                    this.showDivideByZeroToast();
-                } else {
-                    this.activity.addOperand(newOperand);
-
-                    this.dismiss();
-                }
-            } catch (ArithmeticException err) {
-                this.showDivideByZeroToast();
-            } catch (EmptyStackException err) {
-                this.showErrorToast();
-            }
-        } catch (InputMismatchException err) {
-            this.showErrorToast();
+            this.dismiss();
         }
     }
 
-    private String convertToPostfix() {
-        String expression = this.operand.getText().toString();
-
-        expression = expression.replace("\\s+", "");
-
-        ShuntingYard syParser = new ShuntingYard(expression);
-
-        return syParser.evaluate();
-    }
-
-    private void showErrorToast() {
-        Context context = this.getContext();
-        String error = "Invalid operand, check your inputs";
-
-        int duration = Toast.LENGTH_SHORT;
-
-        Toast toast = Toast.makeText(context, error, duration);
-        toast.show();
+    private void changeOperandTint() {
+        if (this.err) {
+            this.operand.setBackgroundTintList(ColorStateList.valueOf(this.getResources().getColor(R.color.colorError)));
+        } else {
+            this.operand.setBackgroundTintList(ColorStateList.valueOf(this.getResources().getColor(R.color.colorPrimary)));
+        }
     }
 
     private void showDivideByZeroToast() {
