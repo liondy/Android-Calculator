@@ -5,12 +5,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.Window;
 
@@ -66,11 +63,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     @Override
-    public void changeSettings(int id) {
-
-    }
-
-    @Override
     public void addOperand(Operand newOperand) {
         this.calculatorPresenter.addOperands(newOperand);
     }
@@ -98,14 +90,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         toggle.syncState();
     }
 
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        MenuInflater inflater = getMenuInflater();
-//        inflater.inflate(R.menu.navigation_menu, menu);
-//        Log.d("tag","lalala");
-//        return true;
-//    }
-
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
@@ -116,6 +100,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 return true;
             case R.id.load_menu:
                 Log.d("tag", "load");
+                return true;
+            case R.id.settings:
+                Log.d("tag","settings");
                 return true;
             case R.id.about_menu:
                 Log.d("tag", "about");
@@ -129,30 +116,4 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 return false;
         }
     }
-
-
-
-//    @Override
-//    public boolean onNavigationItemSelected(MenuItem item) {
-//        // Handle navigation view item clicks here.
-//        Log.d("tag","lololo");
-//        switch (item.getItemId()) {
-//            case R.id.save_menu:
-//                Log.d("tag", "save");
-//                return true;
-//            case R.id.load_menu:
-//                Log.d("tag", "load");
-//                return true;
-//            case R.id.about_menu:
-//                Log.d("tag", "about");
-//                return true;
-//            case R.id.exit_menu:
-//                System.exit(0);
-//                Log.d("tag", "exit");
-//                return true;
-//            default:
-//                Log.d("tag", item.getItemId() + "");
-//                return false;
-//        }
-//    }
 }
