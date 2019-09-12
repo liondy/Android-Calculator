@@ -55,6 +55,10 @@ public class ShuntingYard {
         while ((id = lexer.nextSymbol()) != LexicographicParser.EOF) {
             token = lexer.stringify(id);
 
+            if (token == null) {
+                continue;
+            }
+
             if (LexicographicParser.isNumber(token)) {
                 output.append(token).append(' ');
             }

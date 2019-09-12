@@ -17,5 +17,6 @@
         <item name="minus">-</item>
         <item name="kali">*</item>
         <item name="bagi">/</item>
+        <item name="pangkat">^</item>
     </string-array>
 </resources>
