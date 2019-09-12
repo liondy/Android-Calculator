@@ -61,7 +61,9 @@ public class SettingsFragment extends DialogFragment implements View.OnClickList
         if (id == this.cancelButton.getId()) {
             this.dismissFragment();
         } else {
+            int idx = this.commaList.getSelectedItemPosition();
 
+            this.activity.changeSettings(idx);
         }
     }
 
@@ -74,6 +76,10 @@ public class SettingsFragment extends DialogFragment implements View.OnClickList
         } else {
             throw new ClassCastException(context.toString() + " must implement CalculatorActivity.");
         }
+    }
+
+    public void setSettings(int id) {
+        this.commaList.setSelection(id);
     }
 
     public static SettingsFragment createSettingsFragment() {

@@ -17,11 +17,14 @@ import com.example.calculatingwombat.fragments.SettingsFragment;
 import com.example.calculatingwombat.interfaces.CalculatorActivity;
 import com.example.calculatingwombat.model.Operand;
 import com.example.calculatingwombat.presenter.CalculatorPresenter;
+import com.example.calculatingwombat.storage.CommaSettings;
 
 public class MainActivity extends AppCompatActivity implements CalculatorActivity {
     FragmentManager fragmentManager;
     MainFragment mainFragment;
     CalculatorPresenter calculatorPresenter;
+
+    CommaSettings commaSettings;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +38,8 @@ public class MainActivity extends AppCompatActivity implements CalculatorActivit
         this.mainFragment = (MainFragment)this.fragmentManager.findFragmentById(R.id.main_fragment);
 
         this.calculatorPresenter = new CalculatorPresenter(this);
+
+        this.commaSettings = new CommaSettings(this);
 
         this.mainFragment.setPresenter(this.calculatorPresenter);
     }
