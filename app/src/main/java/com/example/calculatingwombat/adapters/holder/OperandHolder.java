@@ -33,13 +33,12 @@ public class OperandHolder extends RecyclerView.ViewHolder implements View.OnCli
 
     @Override
     public void onClick(View view){
-        Log.i("op_btn_click: ", "debug "+this.getAdapterPosition());
         this.opAdapter.removeOperand(this.getAdapterPosition());
     }
 
     public void setText(Operand operand) {
         this.operandResult.setText(Double.toString(operand.getTotalValue()));
-        this.operandString.setText(operand.getOperand());
+        this.operandString.setText(Double.toString(operand.getCurrentValue()));
         this.operatorSymbol.setText("(" + operand.getOperator() + ")");
     }
 }

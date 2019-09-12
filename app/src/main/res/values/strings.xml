@@ -10,7 +10,15 @@
     <string name="ok_label">OK</string>
     <string name="cancel_label">Cancel</string>
 
+    <string name="settings_label">Settings</string>
+
+    <string name="apply_label">Apply</string>
+
+    <string name="comma_label">Preferred Coma(s)</string>
+
     <string name="operand_fragment_label">Operand Fragment</string>
+
+    <string name="settings_fragment_label">Settings Fragment</string>
 
     <string-array name="operator_array">
         <item name="plus">+</item>
@@ -19,4 +27,13 @@
         <item name="bagi">/</item>
         <item name="pangkat">^</item>
     </string-array>
+
+    <string-array name="comma_array">
+        <item name="dua">2</item>
+        <item name="tiga">3</item>
+        <item name="lima">5</item>
+    </string-array>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

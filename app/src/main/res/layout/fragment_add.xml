@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="@dimen/title_size"
-        android:text="Add Operand"
+        android:text="@string/add_operand_label"
         android:layout_margin="@dimen/spacing_margin"/>
     <LinearLayout
         android:layout_width="match_parent"
@@ -49,6 +49,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textCursorDrawable="@null"
+            android:inputType="number"
             android:backgroundTint="@color/colorPrimary"
             android:id="@+id/operand" />
     </LinearLayout>
