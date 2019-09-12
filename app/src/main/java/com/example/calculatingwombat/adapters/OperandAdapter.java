@@ -37,6 +37,7 @@ public class OperandAdapter extends RecyclerView.Adapter<OperandHolder>  {
     }
 
     public void removeOperand(int idx) {
+        this.mainFragment.removeOperand(idx);
         this.operandList.remove(idx);
         this.notifyDataSetChanged();
     }
@@ -44,7 +45,7 @@ public class OperandAdapter extends RecyclerView.Adapter<OperandHolder>  {
     public OperandHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.operand_layout, parent, false);
-        OperandHolder oh = new OperandHolder(view,this.activity);
+        OperandHolder oh = new OperandHolder(view,this);
         return oh;
     }
 

@@ -19,9 +19,11 @@ public class OperandHolder extends RecyclerView.ViewHolder implements View.OnCli
     private TextView operandString;
     private TextView operatorSymbol;
     private ImageButton deleteButton;
+    private OperandAdapter opAdapter;
 
-    public OperandHolder(View view,CalculatorActivity activity) {
+    public OperandHolder(View view, OperandAdapter oa) {
         super(view);
+        this.opAdapter = oa;
         this.operandResult = view.findViewById(R.id.operand_result);
         this.operandString = view.findViewById(R.id.operand_string);
         this.operatorSymbol = view.findViewById(R.id.operator_symbol);
@@ -32,7 +34,7 @@ public class OperandHolder extends RecyclerView.ViewHolder implements View.OnCli
     @Override
     public void onClick(View view){
         Log.i("op_btn_click: ", "debug "+this.getAdapterPosition());
-        this.get(this.getAdapterPosition());
+        this.opAdapter.removeOperand(this.getAdapterPosition());
     }
 
     public void setText(Operand operand) {

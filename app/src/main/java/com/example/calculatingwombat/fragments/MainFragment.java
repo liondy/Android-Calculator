@@ -83,11 +83,10 @@ public class MainFragment extends Fragment implements View.OnClickListener {
         this.presenter.deleteOperand(index);
     }
 
-    @Override
     public void swapOperand(int idx1, int idx2) {
 
     }
     public void addNewOperand(Operand newOperand) {
         this.operandAdapter.addOperand(newOperand);
-    }\
+    }
 }

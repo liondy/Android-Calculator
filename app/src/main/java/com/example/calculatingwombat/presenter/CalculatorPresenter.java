@@ -29,9 +29,7 @@ public class CalculatorPresenter {
 
     public void deleteOperand(int index) {
         this.operands.remove(index);
-
         this.setPrevValues(index, this.operands.size() - 1);
-        this.activity.removeOperandView(index);
     }
 
 
