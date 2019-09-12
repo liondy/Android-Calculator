@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.Window;
 
+import com.example.calculatingwombat.fragments.HistoryFragment;
 import com.example.calculatingwombat.fragments.MainFragment;
 import com.example.calculatingwombat.fragments.OperandFragment;
 import com.example.calculatingwombat.fragments.SettingsFragment;

@@ -16,6 +16,8 @@
     <string name="comma_label">Preferred Coma(s)</string>
 
     <string name="clear">CLEAR</string>
+    <string name="result">RESULT</string>
+    <string name="history">HISTORY</string>
 
     <string name="operand_fragment_label">Operand Fragment</string>
 
