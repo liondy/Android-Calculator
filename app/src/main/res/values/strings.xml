@@ -9,12 +9,13 @@
     <string name="operand_label">Operand</string>
     <string name="ok_label">OK</string>
     <string name="cancel_label">Cancel</string>
-
     <string name="settings_label">Settings</string>
 
     <string name="apply_label">Apply</string>
 
     <string name="comma_label">Preferred Coma(s)</string>
+
+    <string name="clear">CLEAR</string>
 
     <string name="operand_fragment_label">Operand Fragment</string>
 

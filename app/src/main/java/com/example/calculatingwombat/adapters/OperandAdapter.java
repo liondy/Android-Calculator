@@ -42,6 +42,10 @@ public class OperandAdapter extends RecyclerView.Adapter<OperandHolder>  {
         this.notifyDataSetChanged();
     }
 
+    public void clear(){
+        this.operandList.clear();
+        this.notifyDataSetChanged();}
+
     public OperandHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.operand_layout, parent, false);

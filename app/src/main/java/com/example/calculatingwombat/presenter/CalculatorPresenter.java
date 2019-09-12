@@ -32,6 +32,7 @@ public class CalculatorPresenter {
         this.setPrevValues(index, this.operands.size() - 1);
     }
 
+    public void clear(){this.operands.clear();}
 
     public void swapOperand(int index1, int index2) {
         Collections.swap(this.operands, index1, index2);
