@@ -33,19 +33,39 @@
         app:borderWidth="@dimen/zero"
         app:elevation="@dimen/zero" />
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <com.google.android.material.button.MaterialButton
-            android:layout_alignParentBottom="true"
             android:id="@+id/clear"
-            android:layout_centerHorizontal="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/clear"
             android:theme="@style/ButtonPrimaryTheme"
             />
-    </RelativeLayout>
+        <Space
+            android:layout_width="@dimen/half_spacer_width"
+            android:layout_height="match_parent" />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/result"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/result"
+            android:layout_toRightOf="@id/clear"
+            android:theme="@style/ButtonPrimaryTheme"
+            />
+        <Space
+            android:layout_width="@dimen/half_spacer_width"
+            android:layout_height="match_parent" />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/history"
+            android:layout_toRightOf="@id/result"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/history"
+            android:theme="@style/ButtonPrimaryTheme"
+            />
+    </LinearLayout>
 </RelativeLayout>
 
