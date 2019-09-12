@@ -31,7 +31,6 @@ public class OperandFragment extends DialogFragment implements View.OnClickListe
     EditText operand;
     Button okButton;
     Button cancelButton;
-
     CalculatorActivity activity;
 
     boolean err;

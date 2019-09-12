@@ -9,7 +9,7 @@
     <string name="operand_label">Operand</string>
     <string name="ok_label">OK</string>
     <string name="cancel_label">Cancel</string>
-
+    <string name="clear">CLEAR</string>
     <string name="operand_fragment_label">Operand Fragment</string>
 
     <string-array name="operator_array">
