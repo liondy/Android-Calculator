@@ -4,24 +4,22 @@ import java.util.Stack;
 
 public class Operand {
     private double prevValue;
-    private String operator;
-    private String origOperand;
-    private String postfixOperand;
-    private double value;
+    private char operator;
+    private double operand;
 
-    public Operand(String operator, String origOperand, String postfixOperand) {
-        this.origOperand = origOperand;
-        this.postfixOperand = postfixOperand;
-        this.operator = operator;
-        this.prevValue = 0d;
-        this.value = 0d;
+    public Operand(String operator, String operand) {
+        this.operand = Double.parseDouble(operand);
+        this.operator = operator.charAt(0);
     }
 
     public void setPrevValue(double prevValue) {
         this.prevValue = prevValue;
     }
 
+    /*
+    @Deprecated
     public void calculateResult() {
+        System.out.println(this.postfixOperand);
         Stack<String> stack = new Stack<>();
         String[] tokens = this.postfixOperand.split(" ");
 
@@ -54,6 +52,7 @@ public class Operand {
 
         this.value = toDouble(stack.pop());
     }
+    */
 
     private double calculate(double first, double second, char operator) {
         switch (operator) {
@@ -66,32 +65,15 @@ public class Operand {
     }
 
     public double getTotalValue() {
-        return this.calculate(this.prevValue, this.value, this.operator.charAt(0));
+        return this.calculate(this.prevValue, this.operand, this.operator);
     }
 
     public double getCurrentValue() {
-        return this.value;
+        return this.operand;
     }
 
-    public String getOperand() {
-        return this.origOperand;
-    }
 
-    public String getOperator() {
+    public char getOperator() {
         return this.operator;
-    }
-
-    private boolean isDouble(String test) {
-        try {
-            double d = Double.parseDouble(test);
-        } catch (NumberFormatException | NullPointerException err) {
-            return false;
-        }
-
-        return true;
-    }
-
-    private double toDouble(String num) {
-        return Double.parseDouble(num);
     }
 }

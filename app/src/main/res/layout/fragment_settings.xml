@@ -5,13 +5,13 @@
     android:layout_height="match_parent"
     android:layout_width="match_parent"
     android:orientation="vertical"
-    android:minWidth="350dp"
+    android:minWidth="300dp"
     android:padding="@dimen/content_padding">
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="@dimen/title_size"
-        android:text="@string/add_operand_label"
+        android:text="@string/settings_label"
         android:layout_margin="@dimen/spacing_margin"/>
     <LinearLayout
         android:layout_width="match_parent"
@@ -22,7 +22,7 @@
             android:layout_height="wrap_content"
             android:textSize="@dimen/subtitle_size"
             android:layout_weight="1"
-            android:text="@string/operator_label" />
+            android:text="@string/comma_label" />
         <Space
             android:layout_width="@dimen/spacer_width"
             android:layout_height="match_parent" />
@@ -32,26 +32,7 @@
             android:layout_weight="1"
             android:minHeight="24sp"
             android:textAlignment="center"
-            android:id="@+id/operator_list" />
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_margin="@dimen/spacing_margin">
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/subtitle_size"
-            android:layout_marginBottom="@dimen/spacing_margin"
-            android:text="@string/operand_label"/>
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textCursorDrawable="@null"
-            android:inputType="number"
-            android:backgroundTint="@color/colorPrimary"
-            android:id="@+id/operand" />
+            android:id="@+id/comma_limit" />
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -63,17 +44,17 @@
             android:layout_height="match_parent"
             android:layout_weight="1"/>
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/ok_button"
+            android:id="@+id/apply_changes_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="top|right"
             android:theme="@style/ButtonPrimaryTheme"
-            android:text="@string/ok_label" />
+            android:text="@string/apply_label" />
         <Space
             android:layout_width="@dimen/half_spacer_width"
             android:layout_height="match_parent" />
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/cancel_button"
+            android:id="@+id/cancel_changes_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:theme="@style/ButtonPrimaryTheme"

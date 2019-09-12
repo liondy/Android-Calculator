@@ -100,47 +100,19 @@ public class OperandFragment extends DialogFragment implements View.OnClickListe
     }
 
     private void handleOKButton() {
-        try {
-            String orig = this.operand.getText().toString();
-            String expression = this.convertToPostfix();
-            String symbol = this.operatorList.getSelectedItem().toString();
+        String operand = this.operand.getText().toString();
+        String operator = this.operatorList.getSelectedItem().toString();
 
-            Operand newOperand = new Operand(symbol, orig, expression);
-
-            try {
-                newOperand.calculateResult();
-
-                if (newOperand.getCurrentValue() == 0 && symbol.equals("/")) {
-                    this.showDivideByZeroToast();
-                    this.err = true;
-                } else {
-                    this.activity.addOperand(newOperand);
-
-                    this.dismiss();
-                }
-            } catch (ArithmeticException err) {
-                this.showDivideByZeroToast();
-                this.err = true;
-            } catch (EmptyStackException err) {
-                this.showErrorToast();
-                this.err = true;
-            }
-        } catch (InputMismatchException err) {
-            this.showErrorToast();
+        if (operator.equals("/") && Double.parseDouble(operand) == 0) {
+            this.showDivideByZeroToast();
             this.err = true;
+            this.changeOperandTint();
+        } else {
+            Operand newOperand = new Operand(operator, operand);
+            this.activity.addOperand(newOperand);
+
+            this.dismiss();
         }
-
-        this.changeOperandTint();
-    }
-
-    private String convertToPostfix() {
-        String expression = this.operand.getText().toString();
-
-        expression = expression.replace("\\s+", "");
-
-        ShuntingYard syParser = new ShuntingYard(expression);
-
-        return syParser.evaluate();
     }
 
     private void changeOperandTint() {
@@ -149,16 +121,6 @@ public class OperandFragment extends DialogFragment implements View.OnClickListe
         } else {
             this.operand.setBackgroundTintList(ColorStateList.valueOf(this.getResources().getColor(R.color.colorPrimary)));
         }
-    }
-
-    private void showErrorToast() {
-        Context context = this.getContext();
-        String error = "Invalid operand, check your inputs";
-
-        int duration = Toast.LENGTH_SHORT;
-
-        Toast toast = Toast.makeText(context, error, duration);
-        toast.show();
     }
 
     private void showDivideByZeroToast() {

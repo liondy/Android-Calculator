@@ -13,14 +13,18 @@ import android.view.Window;
 
 import com.example.calculatingwombat.fragments.MainFragment;
 import com.example.calculatingwombat.fragments.OperandFragment;
+import com.example.calculatingwombat.fragments.SettingsFragment;
 import com.example.calculatingwombat.interfaces.CalculatorActivity;
 import com.example.calculatingwombat.model.Operand;
 import com.example.calculatingwombat.presenter.CalculatorPresenter;
+import com.example.calculatingwombat.storage.CommaSettings;
 
 public class MainActivity extends AppCompatActivity implements CalculatorActivity {
     FragmentManager fragmentManager;
     MainFragment mainFragment;
     CalculatorPresenter calculatorPresenter;
+
+    CommaSettings commaSettings;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,9 +35,11 @@ public class MainActivity extends AppCompatActivity implements CalculatorActivit
 
         this.fragmentManager = this.getSupportFragmentManager();
 
-        this.mainFragment = (MainFragment) this.fragmentManager.findFragmentById(R.id.main_fragment);
+        this.mainFragment = (MainFragment)this.fragmentManager.findFragmentById(R.id.main_fragment);
 
         this.calculatorPresenter = new CalculatorPresenter(this);
+
+        this.commaSettings = new CommaSettings(this);
 
         this.mainFragment.setPresenter(this.calculatorPresenter);
     }
@@ -43,6 +49,13 @@ public class MainActivity extends AppCompatActivity implements CalculatorActivit
         String tag = this.getResources().getString(R.string.operand_fragment_label);
         OperandFragment operandFragment = OperandFragment.createOperandFragment();
         operandFragment.show(this.fragmentManager, tag);
+    }
+
+    @Override
+    public void showSettingsDialog() {
+        String tag = this.getResources().getString(R.string.settings_fragment_label);
+        SettingsFragment settingsFragment = SettingsFragment.createSettingsFragment();
+        settingsFragment.show(this.fragmentManager, tag);
     }
 
     @Override
@@ -69,6 +82,7 @@ public class MainActivity extends AppCompatActivity implements CalculatorActivit
         ActionBarDrawerToggle toggle =  new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.app_name, R.string.app_name);
 
         drawerLayout.addDrawerListener(toggle);
+
         toggle.syncState();
     }
 }
