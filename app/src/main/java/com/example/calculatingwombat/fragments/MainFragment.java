@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.RelativeLayout;
 
 import com.example.calculatingwombat.R;
@@ -27,6 +28,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
  */
 public class MainFragment extends Fragment implements View.OnClickListener {
     FloatingActionButton addButton;
+    Button clear;
     RecyclerView operandList;
 
     OperandAdapter operandAdapter;
@@ -52,8 +54,10 @@ public class MainFragment extends Fragment implements View.OnClickListener {
         this.operandList.setLayoutManager(new LinearLayoutManager(getContext()));
 
         this.addButton = view.findViewById(R.id.add_button);
-        this.addButton.setOnClickListener(this);
+        this.clear = view.findViewById(R.id.clear);
 
+        this.addButton.setOnClickListener(this);
+        this.clear.setOnClickListener(this);
         return view;
     }
 
@@ -77,15 +81,20 @@ public class MainFragment extends Fragment implements View.OnClickListener {
         if (id == this.addButton.getId()) {
             this.listener.showOperandDialog();
         }
+        else{
+            this.clearOperand();
+        }
+    }
+
+    public void clearOperand(){
+        this.presenter.clear();
+        this.operandAdapter.clear();
     }
 
     public void removeOperand(int index) {
         this.presenter.deleteOperand(index);
     }
 
-    public void swapOperand(int idx1, int idx2) {
-
-    }
     public void addNewOperand(Operand newOperand) {
         this.operandAdapter.addOperand(newOperand);
     }

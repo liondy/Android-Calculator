@@ -24,6 +24,7 @@
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
     <com.google.android.material.navigation.NavigationView
+        android:id="@+id/navigationMenu"
         android:layout_width="@dimen/navigation_menu_width"
         android:layout_height="match_parent"
         android:layout_gravity="left"

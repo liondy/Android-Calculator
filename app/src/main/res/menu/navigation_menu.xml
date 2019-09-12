@@ -12,6 +12,10 @@
     </group>
     <group android:id="@+id/group_app">
         <item
+            android:icon="@drawable/ic_settings_black_24dp"
+            android:id="@+id/settings"
+            android:title="@string/settings_label" />
+        <item
             android:icon="@drawable/ic_info_outline_black_24dp"
             android:id="@+id/about_menu"
             android:title="@string/about_label" />

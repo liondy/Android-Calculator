@@ -16,15 +16,19 @@ import android.view.Window;
 
 import com.example.calculatingwombat.fragments.MainFragment;
 import com.example.calculatingwombat.fragments.OperandFragment;
+import com.example.calculatingwombat.fragments.SettingsFragment;
 import com.example.calculatingwombat.interfaces.CalculatorActivity;
 import com.example.calculatingwombat.model.Operand;
 import com.example.calculatingwombat.presenter.CalculatorPresenter;
 import com.google.android.material.navigation.NavigationView;
+import com.example.calculatingwombat.storage.CommaSettings;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, CalculatorActivity {
     FragmentManager fragmentManager;
     MainFragment mainFragment;
     CalculatorPresenter calculatorPresenter;
+
+    CommaSettings commaSettings;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,17 +39,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         this.fragmentManager = this.getSupportFragmentManager();
 
-        this.mainFragment = (MainFragment) this.fragmentManager.findFragmentById(R.id.main_fragment);
+        this.mainFragment = (MainFragment)this.fragmentManager.findFragmentById(R.id.main_fragment);
 
         this.calculatorPresenter = new CalculatorPresenter(this);
 
+        this.commaSettings = new CommaSettings(this);
+
         this.mainFragment.setPresenter(this.calculatorPresenter);
 
-        NavigationView mNavigationView = (NavigationView) findViewById(R.id.group_file);
-
-        if (mNavigationView != null) {
-            mNavigationView.setNavigationItemSelectedListener(this);
-        }
+        NavigationView navigationView = (NavigationView) findViewById(R.id.navigationMenu);
+        navigationView.setNavigationItemSelectedListener(this);
     }
 
     @Override
@@ -53,6 +56,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         String tag = this.getResources().getString(R.string.operand_fragment_label);
         OperandFragment operandFragment = OperandFragment.createOperandFragment();
         operandFragment.show(this.fragmentManager, tag);
+    }
+
+    @Override
+    public void showSettingsDialog() {
+        String tag = this.getResources().getString(R.string.settings_fragment_label);
+        SettingsFragment settingsFragment = SettingsFragment.createSettingsFragment();
+        settingsFragment.show(this.fragmentManager, tag);
+    }
+
+    @Override
+    public void changeSettings(int id) {
+
     }
 
     @Override
@@ -79,16 +94,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         ActionBarDrawerToggle toggle =  new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.app_name, R.string.app_name);
 
         drawerLayout.addDrawerListener(toggle);
+
         toggle.syncState();
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.navigation_menu, menu);
-        Log.d("tag","lalala");
-        return true;
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        MenuInflater inflater = getMenuInflater();
+//        inflater.inflate(R.menu.navigation_menu, menu);
+//        Log.d("tag","lalala");
+//        return true;
+//    }
 
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -113,4 +129,30 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 return false;
         }
     }
+
+
+
+//    @Override
+//    public boolean onNavigationItemSelected(MenuItem item) {
+//        // Handle navigation view item clicks here.
+//        Log.d("tag","lololo");
+//        switch (item.getItemId()) {
+//            case R.id.save_menu:
+//                Log.d("tag", "save");
+//                return true;
+//            case R.id.load_menu:
+//                Log.d("tag", "load");
+//                return true;
+//            case R.id.about_menu:
+//                Log.d("tag", "about");
+//                return true;
+//            case R.id.exit_menu:
+//                System.exit(0);
+//                Log.d("tag", "exit");
+//                return true;
+//            default:
+//                Log.d("tag", item.getItemId() + "");
+//                return false;
+//        }
+//    }
 }
