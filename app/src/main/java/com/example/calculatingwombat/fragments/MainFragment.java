@@ -19,6 +19,7 @@ import com.example.calculatingwombat.R;
 import com.example.calculatingwombat.adapters.OperandAdapter;
 import com.example.calculatingwombat.interfaces.CalculatorActivity;
 import com.example.calculatingwombat.model.Operand;
+import com.example.calculatingwombat.presenter.CalculatorPresenter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 /**
@@ -31,6 +32,7 @@ public class MainFragment extends Fragment implements View.OnClickListener {
     OperandAdapter operandAdapter;
 
     CalculatorActivity listener;
+    CalculatorPresenter presenter;
 
     public MainFragment() {
         // Required empty public constructor
@@ -44,7 +46,7 @@ public class MainFragment extends Fragment implements View.OnClickListener {
 
         this.operandList = view.findViewById(R.id.operand_list);
 
-        this.operandAdapter = new OperandAdapter(this.listener);
+        this.operandAdapter = new OperandAdapter(this.listener,this);
 
         this.operandList.setAdapter(this.operandAdapter);
         this.operandList.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -52,12 +54,10 @@ public class MainFragment extends Fragment implements View.OnClickListener {
         this.addButton = view.findViewById(R.id.add_button);
         this.addButton.setOnClickListener(this);
 
-        if (this.operandList == null) {
-            Log.d("operandList", null);
-        }
-
         return view;
     }
+
+    public void setPresenter(CalculatorPresenter cp){this.presenter = cp;}
 
     @Override
     public void onAttach(Context context) {
@@ -79,8 +79,15 @@ public class MainFragment extends Fragment implements View.OnClickListener {
         }
     }
 
+    public void removeOperand(int index) {
+        this.presenter.deleteOperand(index);
+    }
 
+    @Override
+    public void swapOperand(int idx1, int idx2) {
+
+    }
     public void addNewOperand(Operand newOperand) {
         this.operandAdapter.addOperand(newOperand);
-    }
+    }\
 }

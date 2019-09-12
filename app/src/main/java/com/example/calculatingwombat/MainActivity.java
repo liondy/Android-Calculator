@@ -34,6 +34,8 @@ public class MainActivity extends AppCompatActivity implements CalculatorActivit
         this.mainFragment = (MainFragment) this.fragmentManager.findFragmentById(R.id.main_fragment);
 
         this.calculatorPresenter = new CalculatorPresenter(this);
+
+        this.mainFragment.setPresenter(this.calculatorPresenter);
     }
 
     @Override
@@ -51,16 +53,6 @@ public class MainActivity extends AppCompatActivity implements CalculatorActivit
     @Override
     public void addOperandToView(Operand newOperand) {
         this.mainFragment.addNewOperand(newOperand);
-    }
-
-    @Override
-    public void removeOperand(int index) {
-
-    }
-
-    @Override
-    public void swapOperand(int idx1, int idx2) {
-
     }
 
     private void setupToolbar() {
