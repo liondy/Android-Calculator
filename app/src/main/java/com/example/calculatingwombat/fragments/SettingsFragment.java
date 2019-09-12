@@ -62,8 +62,6 @@ public class SettingsFragment extends DialogFragment implements View.OnClickList
             this.dismissFragment();
         } else {
             int idx = this.commaList.getSelectedItemPosition();
-
-            //this.activity.changeSettings(idx);
         }
     }
 

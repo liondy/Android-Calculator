@@ -24,6 +24,10 @@ public class CalculatorPresenter {
         this.operandRes = new ArrayList<>();
     }
 
+    public int getSize() {
+        return this.operands.size();
+    }
+
     public void addOperands(Operand newOperand) {
         if (this.operands.size() > 0) {
             double prev = this.operands.get(this.operands.size() - 1).getTotalValue();
