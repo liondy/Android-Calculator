@@ -22,12 +22,10 @@ import java.util.List;
 
 public class OperandAdapter extends RecyclerView.Adapter<OperandHolder>  {
     private List<Operand> operandList;
-    private CalculatorActivity activity;
     private MainFragment mainFragment;
 
-    public OperandAdapter(CalculatorActivity activity, MainFragment mf) {
+    public OperandAdapter(MainFragment mf) {
         this.operandList = new ArrayList<>();
-        this.activity = activity;
         this.mainFragment = mf;
     }
 

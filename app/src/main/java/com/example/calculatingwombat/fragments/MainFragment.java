@@ -21,6 +21,7 @@ import com.example.calculatingwombat.adapters.OperandAdapter;
 import com.example.calculatingwombat.interfaces.CalculatorActivity;
 import com.example.calculatingwombat.model.Operand;
 import com.example.calculatingwombat.presenter.CalculatorPresenter;
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 /**
@@ -28,7 +29,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
  */
 public class MainFragment extends Fragment implements View.OnClickListener {
     FloatingActionButton addButton;
-    Button clear;
+    MaterialButton clear;
     RecyclerView operandList;
 
     OperandAdapter operandAdapter;
@@ -48,7 +49,7 @@ public class MainFragment extends Fragment implements View.OnClickListener {
 
         this.operandList = view.findViewById(R.id.operand_list);
 
-        this.operandAdapter = new OperandAdapter(this.listener,this);
+        this.operandAdapter = new OperandAdapter(this);
 
         this.operandList.setAdapter(this.operandAdapter);
         this.operandList.setLayoutManager(new LinearLayoutManager(getContext()));
