@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity implements CalculatorActivit
         operandFragment.show(this.fragmentManager, tag);
     }
 
-    @Override
+
     public void showSettingsDialog() {
         String tag = this.getResources().getString(R.string.settings_fragment_label);
         SettingsFragment settingsFragment = SettingsFragment.createSettingsFragment();

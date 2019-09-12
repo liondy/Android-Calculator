@@ -51,6 +51,7 @@ public class MainFragment extends Fragment implements View.OnClickListener {
         this.operandAdapter = new OperandAdapter(this.listener,this);
 
         this.operandList.setAdapter(this.operandAdapter);
+
         this.operandList.setLayoutManager(new LinearLayoutManager(getContext()));
 
         this.addButton = view.findViewById(R.id.add_button);
@@ -93,9 +94,11 @@ public class MainFragment extends Fragment implements View.OnClickListener {
 
     public void removeOperand(int index) {
         this.presenter.deleteOperand(index);
+        this.operandAdapter.notifyItemRemoved(index);
     }
 
     public void addNewOperand(Operand newOperand) {
         this.operandAdapter.addOperand(newOperand);
+        this.operandAdapter.notifyItemInserted(this.presenter.getSize() - 1);
     }
 }
