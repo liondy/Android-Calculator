@@ -93,9 +93,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.settings:
                 Log.d("tag","settings");
                 return true;
-            case R.id.about_menu:
-                Log.d("tag", "about");
-                return true;
             case R.id.exit_menu:
                 System.exit(0);
                 Log.d("tag", "exit");

@@ -33,10 +33,9 @@ public class MainFragment extends Fragment implements View.OnClickListener {
     CalculatorActivity listener;
     OperandAdapter adapter;
     OperandPresenter presenter;
-    HistoryFragment hf;
 
     FloatingActionButton addButton;
-    MaterialButton clear, result, history;
+    MaterialButton clearButton, resultButton;
     RecyclerView operandList;
     TextView tv_res;
 
@@ -57,8 +56,6 @@ public class MainFragment extends Fragment implements View.OnClickListener {
         this.adapter = new OperandAdapter(this.presenter);
         this.adapter.setHasStableIds(true);
 
-        this.hf = HistoryFragment.createHistoryFragment();
-
         this.operandList.setAdapter(adapter);
         this.operandList.setLayoutManager(new LinearLayoutManager(getContext()) {
             @Override
@@ -70,7 +67,8 @@ public class MainFragment extends Fragment implements View.OnClickListener {
         this.operandList.setItemAnimator(new SlideInUpAnimator());
 
         this.addButton = view.findViewById(R.id.add_button);
-        this.clear = view.findViewById(R.id.clear);
+        this.clearButton = view.findViewById(R.id.clear_button);
+        this.resultButton = view.findViewById(R.id.result_button);
 
         ItemTouchHelper.Callback cb = new OperandTouchHelper(adapter);
 
@@ -79,7 +77,8 @@ public class MainFragment extends Fragment implements View.OnClickListener {
         helper.attachToRecyclerView(this.operandList);
 
         this.addButton.setOnClickListener(this);
-        this.clear.setOnClickListener(this);
+        this.clearButton.setOnClickListener(this);
+        this.resultButton.setOnClickListener(this);
 
         return view;
     }
@@ -101,12 +100,10 @@ public class MainFragment extends Fragment implements View.OnClickListener {
 
         if (id == this.addButton.getId()) {
             this.listener.showOperandDialog();
-        } else if (id == this.clear.getId()){
+        } else if (id == this.clearButton.getId()){
             this.clearOperand();
-        } else if (id == this.result.getId()){
+        } else if (id == this.resultButton.getId()){
             this.addResult();
-        } else {
-            this.showHistoryDialog();
         }
     }
 
@@ -118,20 +115,11 @@ public class MainFragment extends Fragment implements View.OnClickListener {
         } catch (NullPointerException e){
             this.tv_res.setText("000.000");
         }
-
-        if (result != null)
-            this.hf.addResult(result);
     }
 
     public void clearOperand() {
         this.presenter.clear();
         this.adapter.notifyDataSetChanged();
-    }
-
-    public void showHistoryDialog(){
-        FragmentManager fm = this.getFragmentManager();
-        String tag = "History Fragment";
-        this.hf.show(fm,tag);
     }
 
     public void addOperand(Operand newOperand) {

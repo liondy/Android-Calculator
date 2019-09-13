@@ -8,9 +8,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.calculatingwombat.R;
 import com.example.calculatingwombat.adapters.OperandAdapter;
+import com.example.calculatingwombat.interfaces.ItemTouchHelperViewHolder;
 import com.example.calculatingwombat.model.Operand;
 
-public class OperandHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+public class OperandHolder extends RecyclerView.ViewHolder implements View.OnClickListener, ItemTouchHelperViewHolder {
     private TextView operandResult;
     private TextView operandString;
     private TextView operatorSymbol;
@@ -40,5 +41,15 @@ public class OperandHolder extends RecyclerView.ViewHolder implements View.OnCli
         this.operandResult.setText(Double.toString(operand.getTotalValue()));
         this.operandString.setText(Double.toString(operand.getCurrentValue()));
         this.operatorSymbol.setText("(" + operand.getOperator() + ")");
+    }
+
+    @Override
+    public void onItemSelected() {
+        itemView.setTranslationZ(15);
+    }
+
+    @Override
+    public void onItemClear() {
+        itemView.setTranslationZ(0);
     }
 }

@@ -5,6 +5,7 @@ import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
 import android.text.Editable;
@@ -21,10 +22,6 @@ import android.widget.Toast;
 import com.example.calculatingwombat.R;
 import com.example.calculatingwombat.interfaces.CalculatorActivity;
 import com.example.calculatingwombat.model.Operand;
-import com.example.calculatingwombat.model.utils.ShuntingYard;
-
-import java.util.EmptyStackException;
-import java.util.InputMismatchException;
 
 public class OperandFragment extends DialogFragment implements View.OnClickListener {
     Spinner operatorList;

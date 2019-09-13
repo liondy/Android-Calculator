@@ -7,15 +7,10 @@ import android.view.ViewGroup;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.calculatingwombat.R;
-import com.example.calculatingwombat.adapters.helper.ItemTouchHelperAdapter;
+import com.example.calculatingwombat.interfaces.ItemTouchHelperAdapter;
 import com.example.calculatingwombat.adapters.holder.OperandHolder;
-import com.example.calculatingwombat.fragments.MainFragment;
 import com.example.calculatingwombat.model.Operand;
 import com.example.calculatingwombat.presenter.OperandPresenter;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 public class OperandAdapter extends RecyclerView.Adapter<OperandHolder> implements ItemTouchHelperAdapter  {
     private OperandPresenter presenter;
