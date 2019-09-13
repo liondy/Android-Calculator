@@ -2,7 +2,8 @@
     <string name="app_name">Calculating Wombat</string>
     <string name="save_label">Save</string>
     <string name="load_label">Load</string>
-    <string name="about_label">About Us</string>
+    <string name="reset_label">Reset</string>
+    <string name="history_label">History</string>
     <string name="exit_label">Exit</string>
     <string name="add_operand_label">Add Operand</string>
     <string name="operator_label">Operator</string>
@@ -11,13 +12,12 @@
     <string name="cancel_label">Cancel</string>
     <string name="settings_label">Settings</string>
 
+    <string name="clear_label">Clear</string>
+    <string name="result_label">Result</string>
+
     <string name="apply_label">Apply</string>
 
     <string name="comma_label">Preferred Coma(s)</string>
-
-    <string name="clear">CLEAR</string>
-    <string name="result">RESULT</string>
-    <string name="history">HISTORY</string>
 
     <string name="operand_fragment_label">Operand Fragment</string>
 

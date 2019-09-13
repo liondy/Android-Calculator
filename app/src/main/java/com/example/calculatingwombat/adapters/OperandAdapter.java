@@ -1,7 +1,5 @@
 package com.example.calculatingwombat.adapters;
 
-import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,57 +7,57 @@ import android.view.ViewGroup;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.calculatingwombat.R;
-import com.example.calculatingwombat.adapters.helper.ItemTouchHelperAdapter;
+import com.example.calculatingwombat.interfaces.ItemTouchHelperAdapter;
 import com.example.calculatingwombat.adapters.holder.OperandHolder;
-import com.example.calculatingwombat.fragments.MainFragment;
-import com.example.calculatingwombat.interfaces.CalculatorActivity;
 import com.example.calculatingwombat.model.Operand;
-import com.example.calculatingwombat.presenter.CalculatorPresenter;
+import com.example.calculatingwombat.presenter.OperandPresenter;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+public class OperandAdapter extends RecyclerView.Adapter<OperandHolder> implements ItemTouchHelperAdapter  {
+    private OperandPresenter presenter;
 
-public class OperandAdapter extends RecyclerView.Adapter<OperandHolder>  {
-    private List<Operand> operandList;
-    private MainFragment mainFragment;
-
-    public OperandAdapter(MainFragment mf) {
-        this.operandList = new ArrayList<>();
-        this.mainFragment = mf;
+    public OperandAdapter(OperandPresenter presenter) {
+        this.presenter = presenter;
     }
-
-    public void addOperand(Operand operand) {
-        this.operandList.add(operand);
-        this.notifyDataSetChanged();
-    }
-
-    public void removeOperand(int idx) {
-        this.mainFragment.removeOperand(idx);
-        this.operandList.remove(idx);
-        this.notifyDataSetChanged();
-    }
-
-    public void clear(){
-        this.operandList.clear();
-        this.notifyDataSetChanged();}
 
     public OperandHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.operand_layout, parent, false);
         OperandHolder oh = new OperandHolder(view,this);
+
         return oh;
     }
 
     @Override
     public void onBindViewHolder(OperandHolder holder, int position) {
-        Operand target = this.operandList.get(position);
+        Operand target = this.presenter.getOperands().get(position);
 
         holder.setText(target);
     }
 
     @Override
     public int getItemCount() {
-        return this.operandList.size();
+        return this.presenter.getOperands().size();
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return this.presenter.getOperands().get(position).hashCode();
+    }
+
+    @Override
+    public void onItemMove(int idx1, int idx2) {
+        this.presenter.swapOperand(idx1, idx2);
+        this.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onItemSwipe(int idx) {
+        this.presenter.deleteOperand(idx);
+        this.notifyDataSetChanged();
+    }
+
+    public void handleGarbageButton(int idx) {
+        this.presenter.deleteOperand(idx);
+        this.notifyDataSetChanged();
     }
 }

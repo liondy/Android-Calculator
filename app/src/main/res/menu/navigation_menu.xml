@@ -9,16 +9,20 @@
             android:icon="@drawable/ic_folder_open_black_24dp"
             android:id="@+id/load_menu"
             android:title="@string/load_label" />
+        <item
+            android:icon="@drawable/ic_not_interested_black_24dp"
+            android:id="@+id/clear_menu"
+            android:title="@string/reset_label" />
+        <item
+            android:icon="@drawable/ic_history_black_24dp"
+            android:id="@+id/history_menu"
+            android:title="@string/history_label" />
     </group>
     <group android:id="@+id/group_app">
         <item
             android:icon="@drawable/ic_settings_black_24dp"
             android:id="@+id/settings"
             android:title="@string/settings_label" />
-        <item
-            android:icon="@drawable/ic_info_outline_black_24dp"
-            android:id="@+id/about_menu"
-            android:title="@string/about_label" />
         <item
             android:icon="@drawable/ic_exit_to_app_black_24dp"
             android:id="@+id/exit_menu"

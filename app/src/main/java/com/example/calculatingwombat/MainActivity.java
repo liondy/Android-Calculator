@@ -14,20 +14,17 @@ import android.view.MenuItem;
 import android.view.Window;
 import android.widget.Toast;
 
-import com.example.calculatingwombat.fragments.HistoryFragment;
 import com.example.calculatingwombat.fragments.MainFragment;
 import com.example.calculatingwombat.fragments.OperandFragment;
 import com.example.calculatingwombat.fragments.SettingsFragment;
 import com.example.calculatingwombat.interfaces.CalculatorActivity;
 import com.example.calculatingwombat.model.Operand;
-import com.example.calculatingwombat.presenter.CalculatorPresenter;
 import com.google.android.material.navigation.NavigationView;
 import com.example.calculatingwombat.storage.CommaSettings;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, CalculatorActivity {
     FragmentManager fragmentManager;
     MainFragment mainFragment;
-    CalculatorPresenter calculatorPresenter;
 
     CommaSettings commaSettings;
 
@@ -42,11 +39,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         this.mainFragment = (MainFragment)this.fragmentManager.findFragmentById(R.id.main_fragment);
 
-        this.calculatorPresenter = new CalculatorPresenter(this);
-
         this.commaSettings = new CommaSettings(this);
-
-        this.mainFragment.setPresenter(this.calculatorPresenter);
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.navigationMenu);
         navigationView.setNavigationItemSelectedListener(this);
@@ -68,12 +61,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public void addOperand(Operand newOperand) {
-        this.calculatorPresenter.addOperands(newOperand);
-    }
-
-    @Override
-    public void addOperandToView(Operand newOperand) {
-        this.mainFragment.addNewOperand(newOperand);
+        this.mainFragment.addOperand(newOperand);
     }
 
     private void setupToolbar() {
@@ -107,9 +95,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 return true;
             case R.id.settings:
                 Log.d("tag","settings");
-                return true;
-            case R.id.about_menu:
-                Log.d("tag", "about");
                 return true;
             case R.id.exit_menu:
                 closeProgram();
