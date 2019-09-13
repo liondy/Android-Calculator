@@ -4,8 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.calculatingwombat.adapters.OperandAdapter;
-
 public class OperandTouchHelper extends ItemTouchHelper.Callback {
     private final ItemTouchHelperAdapter adapter;
 

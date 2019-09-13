@@ -103,7 +103,11 @@ public class OperandFragment extends DialogFragment implements View.OnClickListe
         String operand = this.operand.getText().toString();
         String operator = this.operatorList.getSelectedItem().toString();
 
-        if (operator.equals("/") && Double.parseDouble(operand) == 0) {
+        if (operand.isEmpty()) {
+            this.showEmptyToast();
+            this.err = true;
+            this.changeOperandTint();
+        } else if (operator.equals("/") && Double.parseDouble(operand) == 0) {
             this.showDivideByZeroToast();
             this.err = true;
             this.changeOperandTint();
@@ -121,6 +125,16 @@ public class OperandFragment extends DialogFragment implements View.OnClickListe
         } else {
             this.operand.setBackgroundTintList(ColorStateList.valueOf(this.getResources().getColor(R.color.colorPrimary)));
         }
+    }
+
+    private void showEmptyToast() {
+        Context context = this.getContext();
+        String error = "Inputs must not be empty";
+
+        int duration = Toast.LENGTH_SHORT;
+
+        Toast toast = Toast.makeText(context, error, duration);
+        toast.show();
     }
 
     private void showDivideByZeroToast() {

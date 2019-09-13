@@ -9,6 +9,7 @@
             android:icon="@drawable/ic_folder_open_black_24dp"
             android:id="@+id/load_menu"
             android:title="@string/load_label" />
+
     </group>
     <group android:id="@+id/group_app">
         <item

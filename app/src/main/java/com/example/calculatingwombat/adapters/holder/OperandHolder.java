@@ -1,9 +1,6 @@
 package com.example.calculatingwombat.adapters.holder;
 
-import android.media.Image;
-import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -11,7 +8,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.calculatingwombat.R;
 import com.example.calculatingwombat.adapters.OperandAdapter;
-import com.example.calculatingwombat.interfaces.CalculatorActivity;
 import com.example.calculatingwombat.model.Operand;
 
 public class OperandHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
@@ -33,7 +29,7 @@ public class OperandHolder extends RecyclerView.ViewHolder implements View.OnCli
 
     @Override
     public void onClick(View view){
-        this.opAdapter.removeOperand(this.getAdapterPosition());
+        this.opAdapter.handleRemoveOperand(this.getAdapterPosition());
     }
 
     public void setText(Operand operand) {

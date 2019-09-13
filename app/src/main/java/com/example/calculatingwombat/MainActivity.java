@@ -24,7 +24,6 @@ import com.example.calculatingwombat.storage.CommaSettings;
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, CalculatorActivity {
     FragmentManager fragmentManager;
     MainFragment mainFragment;
-    CalculatorPresenter calculatorPresenter;
 
     CommaSettings commaSettings;
 
@@ -39,11 +38,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         this.mainFragment = (MainFragment)this.fragmentManager.findFragmentById(R.id.main_fragment);
 
-        this.calculatorPresenter = new CalculatorPresenter(this);
-
         this.commaSettings = new CommaSettings(this);
-
-        this.mainFragment.setPresenter(this.calculatorPresenter);
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.navigationMenu);
         navigationView.setNavigationItemSelectedListener(this);
@@ -65,12 +60,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public void addOperand(Operand newOperand) {
-        this.calculatorPresenter.addOperands(newOperand);
-    }
-
-    @Override
-    public void addOperandToView(Operand newOperand) {
-        this.mainFragment.addNewOperand(newOperand);
+        this.mainFragment.addOperand(newOperand);
     }
 
     private void setupToolbar() {
