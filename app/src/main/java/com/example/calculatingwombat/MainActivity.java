@@ -11,13 +11,11 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.Window;
 
-import com.example.calculatingwombat.fragments.HistoryFragment;
 import com.example.calculatingwombat.fragments.MainFragment;
 import com.example.calculatingwombat.fragments.OperandFragment;
 import com.example.calculatingwombat.fragments.SettingsFragment;
 import com.example.calculatingwombat.interfaces.CalculatorActivity;
 import com.example.calculatingwombat.model.Operand;
-import com.example.calculatingwombat.presenter.CalculatorPresenter;
 import com.google.android.material.navigation.NavigationView;
 import com.example.calculatingwombat.storage.CommaSettings;
 

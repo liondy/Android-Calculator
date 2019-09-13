@@ -14,16 +14,21 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Date;
 
-public class CalculatorPresenter {
+public class OperandPresenter {
     private List<Operand> operands;
     private List<OperandResult> operandRes;
 
-    private OperandAdapter operandAdapter;
-
-    public CalculatorPresenter(OperandAdapter adapter) {
-        this.operandAdapter = adapter;
+    public OperandPresenter() {
         this.operands = new ArrayList<>();
         this.operandRes = new ArrayList<>();
+    }
+
+    public void setList(List<Operand> operands) {
+        Collections.copy(this.operands, operands);
+    }
+
+    public List<Operand> getOperands() {
+        return this.operands;
     }
 
     public void addOperand(Operand newOperand) {
@@ -34,16 +39,11 @@ public class CalculatorPresenter {
         }
 
         this.operands.add(newOperand);
-        this.operandAdapter.addOperand(newOperand);
     }
 
     public void deleteOperand(int idx) {
         this.operands.remove(idx);
         this.setPrevValues(idx, this.operands.size() - 1);
-
-        this.operandAdapter.removeOperand(idx);
-
-        this.operandAdapter.syncData(this.operands);
     }
 
     public OperandResult addResult(){
@@ -58,7 +58,9 @@ public class CalculatorPresenter {
         return res;
     }
 
-    public void clear(){this.operands.clear();}
+    public void clear() {
+        this.operands.clear();
+    }
 
     public void swapOperand(int index1, int index2) {
         Collections.swap(this.operands, index1, index2);

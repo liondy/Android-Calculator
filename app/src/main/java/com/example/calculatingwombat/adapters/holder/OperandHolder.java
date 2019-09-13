@@ -29,7 +29,11 @@ public class OperandHolder extends RecyclerView.ViewHolder implements View.OnCli
 
     @Override
     public void onClick(View view){
-        this.opAdapter.handleRemoveOperand(this.getAdapterPosition());
+        int id = view.getId();
+
+        if (id == this.deleteButton.getId()) {
+            this.opAdapter.handleGarbageButton(this.getAdapterPosition());
+        }
     }
 
     public void setText(Operand operand) {

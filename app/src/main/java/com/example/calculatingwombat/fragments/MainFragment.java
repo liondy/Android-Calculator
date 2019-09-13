@@ -20,7 +20,7 @@ import com.example.calculatingwombat.adapters.helper.OperandTouchHelper;
 import com.example.calculatingwombat.interfaces.CalculatorActivity;
 import com.example.calculatingwombat.model.Operand;
 import com.example.calculatingwombat.model.OperandResult;
-import com.example.calculatingwombat.presenter.CalculatorPresenter;
+import com.example.calculatingwombat.presenter.OperandPresenter;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -30,14 +30,15 @@ import jp.wasabeef.recyclerview.animators.SlideInUpAnimator;
  * A simple {@link Fragment} subclass.
  */
 public class MainFragment extends Fragment implements View.OnClickListener {
+    CalculatorActivity listener;
+    OperandAdapter adapter;
+    OperandPresenter presenter;
+    HistoryFragment hf;
+
     FloatingActionButton addButton;
     MaterialButton clear, result, history;
     RecyclerView operandList;
     TextView tv_res;
-    OperandAdapter operandAdapter;
-    CalculatorActivity listener;
-    CalculatorPresenter presenter;
-    HistoryFragment hf;
 
     public MainFragment() {
         // Required empty public constructor
@@ -52,22 +53,26 @@ public class MainFragment extends Fragment implements View.OnClickListener {
         this.tv_res = view.findViewById(R.id.calculator_result);
         this.operandList = view.findViewById(R.id.operand_list);
 
-        this.operandAdapter = new OperandAdapter(this);
+        this.presenter = new OperandPresenter();
+        this.adapter = new OperandAdapter(this.presenter);
+        this.adapter.setHasStableIds(true);
 
         this.hf = HistoryFragment.createHistoryFragment();
 
-        this.operandList.setAdapter(this.operandAdapter);
-
-        this.operandList.setLayoutManager(new LinearLayoutManager(getContext()));
+        this.operandList.setAdapter(adapter);
+        this.operandList.setLayoutManager(new LinearLayoutManager(getContext()) {
+            @Override
+            public boolean supportsPredictiveItemAnimations() {
+                return true;
+            }
+        });
 
         this.operandList.setItemAnimator(new SlideInUpAnimator());
 
         this.addButton = view.findViewById(R.id.add_button);
         this.clear = view.findViewById(R.id.clear);
 
-        this.presenter = new CalculatorPresenter(this.operandAdapter);
-
-        ItemTouchHelper.Callback cb = new OperandTouchHelper(this.operandAdapter);
+        ItemTouchHelper.Callback cb = new OperandTouchHelper(adapter);
 
         ItemTouchHelper helper = new ItemTouchHelper(cb);
 
@@ -118,9 +123,9 @@ public class MainFragment extends Fragment implements View.OnClickListener {
             this.hf.addResult(result);
     }
 
-    public void clearOperand(){
+    public void clearOperand() {
         this.presenter.clear();
-        this.operandAdapter.clear();
+        this.adapter.notifyDataSetChanged();
     }
 
     public void showHistoryDialog(){
@@ -129,15 +134,8 @@ public class MainFragment extends Fragment implements View.OnClickListener {
         this.hf.show(fm,tag);
     }
 
-    public void removeOperand(int index) {
-        this.presenter.deleteOperand(index);
-    }
-
     public void addOperand(Operand newOperand) {
         this.presenter.addOperand(newOperand);
-    }
-
-    public void swapOperand(int idx1, int idx2) {
-        this.presenter.swapOperand(idx1, idx2);
+        this.adapter.notifyDataSetChanged();
     }
 }
