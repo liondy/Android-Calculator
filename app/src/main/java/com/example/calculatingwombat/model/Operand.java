@@ -76,4 +76,8 @@ public class Operand {
     public char getOperator() {
         return this.operator;
     }
+
+    public double getOperand(){
+        return this.operand;
+    }
 }

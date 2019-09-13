@@ -126,4 +126,8 @@ public class MainFragment extends Fragment implements View.OnClickListener {
         this.presenter.addOperand(newOperand);
         this.adapter.notifyDataSetChanged();
     }
+
+    public OperandPresenter getPresenter(){
+        return this.presenter;
+    }
 }

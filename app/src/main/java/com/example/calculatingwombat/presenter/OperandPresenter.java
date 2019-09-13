@@ -27,6 +27,11 @@ public class OperandPresenter {
         Collections.copy(this.operands, operands);
     }
 
+    public List getList(){
+        final List<Operand> operands = this.operands;
+        return operands;
+    }
+
     public List<Operand> getOperands() {
         return this.operands;
     }
