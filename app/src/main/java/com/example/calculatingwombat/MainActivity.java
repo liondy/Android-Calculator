@@ -1,15 +1,18 @@
 package com.example.calculatingwombat;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentManager;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.Window;
+import android.widget.Toast;
 
 import com.example.calculatingwombat.fragments.HistoryFragment;
 import com.example.calculatingwombat.fragments.MainFragment;
@@ -97,7 +100,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Log.d("tag","lololo");
         switch (item.getItemId()) {
             case R.id.save_menu:
-                Log.d("tag", "save");
+                save();
                 return true;
             case R.id.load_menu:
                 Log.d("tag", "load");
@@ -109,12 +112,36 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 Log.d("tag", "about");
                 return true;
             case R.id.exit_menu:
-                System.exit(0);
-                Log.d("tag", "exit");
+                closeProgram();
                 return true;
             default:
                 Log.d("tag", item.getItemId() + "");
                 return false;
         }
+    }
+
+    private void save(){
+        Toast.makeText(this,"Calculation Saved",Toast.LENGTH_LONG).show();
+    }
+
+    private void closeProgram(){
+        final AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        builder.setMessage("Do you want to save your calculation?");
+        builder.setCancelable(true);
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                finish();
+            }
+        });
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                save();
+                finish();
+            }
+        });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
 }
