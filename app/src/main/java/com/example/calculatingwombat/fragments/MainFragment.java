@@ -64,13 +64,13 @@ public class MainFragment extends Fragment implements View.OnClickListener {
 
         this.addButton = view.findViewById(R.id.add_button);
         this.clear = view.findViewById(R.id.clear);
-//        this.result = view.findViewById(R.id.result);
-//        this.history = view.findViewById(R.id.history);
+        this.result = view.findViewById(R.id.result);
+        this.history = view.findViewById(R.id.history);
 
         this.addButton.setOnClickListener(this);
         this.clear.setOnClickListener(this);
-//        this.result.setOnClickListener(this);
-//        this.history.setOnClickListener(this);
+        this.result.setOnClickListener(this);
+        this.history.setOnClickListener(this);
 
         return view;
     }
