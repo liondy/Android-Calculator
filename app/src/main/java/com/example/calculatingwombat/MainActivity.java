@@ -1,32 +1,41 @@
 package com.example.calculatingwombat;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentManager;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.Window;
+import android.widget.Toast;
 
-import com.example.calculatingwombat.fragments.HistoryFragment;
 import com.example.calculatingwombat.fragments.MainFragment;
 import com.example.calculatingwombat.fragments.OperandFragment;
 import com.example.calculatingwombat.fragments.SettingsFragment;
 import com.example.calculatingwombat.interfaces.CalculatorActivity;
 import com.example.calculatingwombat.model.Operand;
-import com.example.calculatingwombat.presenter.CalculatorPresenter;
+import com.example.calculatingwombat.presenter.OperandPresenter;
+import com.example.calculatingwombat.storage.Storage;
 import com.google.android.material.navigation.NavigationView;
 import com.example.calculatingwombat.storage.CommaSettings;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, CalculatorActivity {
     FragmentManager fragmentManager;
     MainFragment mainFragment;
-    CalculatorPresenter calculatorPresenter;
 
     CommaSettings commaSettings;
+    Storage s;
+
+    boolean save;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,14 +48,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         this.mainFragment = (MainFragment)this.fragmentManager.findFragmentById(R.id.main_fragment);
 
-        this.calculatorPresenter = new CalculatorPresenter(this);
-
         this.commaSettings = new CommaSettings(this);
-
-        this.mainFragment.setPresenter(this.calculatorPresenter);
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.navigationMenu);
         navigationView.setNavigationItemSelectedListener(this);
+
+        this.s = new Storage(this);
+
+        this.save = false;
     }
 
     @Override
@@ -65,12 +74,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public void addOperand(Operand newOperand) {
-        this.calculatorPresenter.addOperands(newOperand);
-    }
-
-    @Override
-    public void addOperandToView(Operand newOperand) {
-        this.mainFragment.addNewOperand(newOperand);
+        this.mainFragment.addOperand(newOperand);
     }
 
     private void setupToolbar() {
@@ -97,24 +101,73 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Log.d("tag","lololo");
         switch (item.getItemId()) {
             case R.id.save_menu:
-                Log.d("tag", "save");
+                save();
                 return true;
             case R.id.load_menu:
+                load();
                 Log.d("tag", "load");
                 return true;
             case R.id.settings:
                 Log.d("tag","settings");
                 return true;
-            case R.id.about_menu:
-                Log.d("tag", "about");
-                return true;
             case R.id.exit_menu:
-                System.exit(0);
-                Log.d("tag", "exit");
+                closeProgram();
                 return true;
             default:
                 Log.d("tag", item.getItemId() + "");
                 return false;
+        }
+    }
+
+    private void save(){
+        super.onPause();
+        this.s.setPresenter(mainFragment.getPresenter());
+//        int i;
+//        for (i=0;i<this.s.getSize();i++){
+            this.s.sharedPreferences.edit().remove("operand").apply();
+            this.s.sharedPreferences.edit().remove("operator").apply();
+//        }
+        this.s.sharedPreferences.edit().apply();
+        this.s.saveList();
+        Toast.makeText(this,"Calculation Saved",Toast.LENGTH_LONG).show();
+        this.save=true;
+    }
+
+    private void load(){
+        super.onResume();
+        Operand[] list = this.s.loadList();
+        int i;
+        for (i=0;i<list.length;i++){
+            this.mainFragment.addOperand(list[i]);
+        }
+    }
+
+    private void closeProgram(){
+        if(!save){
+            final AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+            builder.setMessage("Do you want to save your calculation?");
+            builder.setCancelable(true);
+            builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    finish();
+                    moveTaskToBack(true);
+                }
+            });
+            builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    save();
+                    finish();
+                    moveTaskToBack(true);
+                }
+            });
+            AlertDialog alertDialog = builder.create();
+            alertDialog.show();
+        }
+        else{
+            finish();
+            moveTaskToBack(true);
         }
     }
 }

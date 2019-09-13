@@ -2,6 +2,7 @@ package com.example.calculatingwombat.presenter;
 
 import android.util.Log;
 
+import com.example.calculatingwombat.adapters.OperandAdapter;
 import com.example.calculatingwombat.interfaces.CalculatorActivity;
 import com.example.calculatingwombat.model.Operand;
 import com.example.calculatingwombat.model.OperandResult;
@@ -13,22 +14,29 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Date;
 
-public class CalculatorPresenter {
+public class OperandPresenter {
     private List<Operand> operands;
     private List<OperandResult> operandRes;
-    private CalculatorActivity activity;
 
-    public CalculatorPresenter(CalculatorActivity activity) {
-        this.activity = activity;
+    public OperandPresenter() {
         this.operands = new ArrayList<>();
         this.operandRes = new ArrayList<>();
     }
 
-    public int getSize() {
-        return this.operands.size();
+    public void setList(List<Operand> operands) {
+        Collections.copy(this.operands, operands);
     }
 
-    public void addOperands(Operand newOperand) {
+    public List getList(){
+        final List<Operand> operands = this.operands;
+        return operands;
+    }
+
+    public List<Operand> getOperands() {
+        return this.operands;
+    }
+
+    public void addOperand(Operand newOperand) {
         if (this.operands.size() > 0) {
             double prev = this.operands.get(this.operands.size() - 1).getTotalValue();
 
@@ -36,27 +44,28 @@ public class CalculatorPresenter {
         }
 
         this.operands.add(newOperand);
-        this.activity.addOperandToView(newOperand);
     }
 
-    public void deleteOperand(int index) {
-        this.operands.remove(index);
-        this.setPrevValues(index, this.operands.size() - 1);
+    public void deleteOperand(int idx) {
+        this.operands.remove(idx);
+        this.setPrevValues(idx, this.operands.size() - 1);
     }
 
     public OperandResult addResult(){
         OperandResult res = null;
-        if(this.operands.size()!=0){
-            Operand temp = this.operands.get(this.operands.size()-1);
+        if (this.operands.size() != 0) {
+            Operand temp = this.operands.get(this.operands.size() - 1);
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd G 'at' HH:mm:ss z");
             Log.i("date: ", sdf.format(new Date()));
             res = new OperandResult(temp.getTotalValue(),sdf.format(new Date()));
             this.operandRes.add(res);
-        }
+    }
         return res;
     }
 
-    public void clear(){this.operands.clear();}
+    public void clear() {
+        this.operands.clear();
+    }
 
     public void swapOperand(int index1, int index2) {
         Collections.swap(this.operands, index1, index2);
