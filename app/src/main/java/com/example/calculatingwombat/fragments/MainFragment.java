@@ -24,6 +24,10 @@ import com.example.calculatingwombat.presenter.OperandPresenter;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+
 import jp.wasabeef.recyclerview.animators.SlideInUpAnimator;
 
 /**
@@ -35,7 +39,6 @@ public class MainFragment extends Fragment implements View.OnClickListener {
     OperandPresenter presenter;
 
     FloatingActionButton addButton;
-    MaterialButton clearButton, resultButton;
     RecyclerView operandList;
     TextView tv_res;
 
@@ -67,8 +70,6 @@ public class MainFragment extends Fragment implements View.OnClickListener {
         this.operandList.setItemAnimator(new SlideInUpAnimator());
 
         this.addButton = view.findViewById(R.id.add_button);
-        this.clearButton = view.findViewById(R.id.clear_button);
-        this.resultButton = view.findViewById(R.id.result_button);
 
         ItemTouchHelper.Callback cb = new OperandTouchHelper(adapter);
 
@@ -77,8 +78,6 @@ public class MainFragment extends Fragment implements View.OnClickListener {
         helper.attachToRecyclerView(this.operandList);
 
         this.addButton.setOnClickListener(this);
-        this.clearButton.setOnClickListener(this);
-        this.resultButton.setOnClickListener(this);
 
         return view;
     }
@@ -100,25 +99,29 @@ public class MainFragment extends Fragment implements View.OnClickListener {
 
         if (id == this.addButton.getId()) {
             this.listener.showOperandDialog();
-        } else if (id == this.clearButton.getId()){
-            this.clearOperand();
-        } else if (id == this.resultButton.getId()){
-            this.addResult();
         }
     }
 
-    public void addResult() {
-        OperandResult result = this.presenter.addResult();
-
-        try {
-            this.tv_res.setText(Double.toString(result.getValue()));
-        } catch (NullPointerException e){
-            this.tv_res.setText("0.00");
+    public OperandResult processResult() {
+        if (this.presenter.getOperands().size() == 0) {
+            return null;
         }
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd G 'at' HH:mm:ss z");
+        Operand lastOperand = this.presenter.getOperands().get(this.presenter.getOperands().size() - 1);
+
+        this.setResultText(lastOperand);
+
+        return new OperandResult(lastOperand.getTotalValue(),sdf.format(new Date()));
+    }
+
+    public void setResultText(Operand lastOperand) {
+        this.tv_res.setText(lastOperand.getFormattedValue());
     }
 
     public void clearOperand() {
         this.presenter.clear();
+        this.tv_res.setText("0.00");
         this.adapter.notifyDataSetChanged();
     }
 
@@ -127,7 +130,7 @@ public class MainFragment extends Fragment implements View.OnClickListener {
         this.adapter.notifyDataSetChanged();
     }
 
-    public OperandPresenter getPresenter(){
-        return this.presenter;
+    public List<Operand> getOperandList() {
+        return this.presenter.getOperands();
     }
 }

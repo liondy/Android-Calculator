@@ -2,7 +2,6 @@ package com.example.calculatingwombat.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,45 +14,67 @@ import com.example.calculatingwombat.R;
 import com.example.calculatingwombat.adapters.HistoryAdapter;
 import com.example.calculatingwombat.interfaces.CalculatorActivity;
 import com.example.calculatingwombat.model.OperandResult;
+import com.example.calculatingwombat.presenter.HistoryPresenter;
 import com.google.android.material.button.MaterialButton;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class HistoryFragment extends DialogFragment implements View.OnClickListener {
-    protected MaterialButton btn;
-    protected CalculatorActivity activity;
-    protected HistoryAdapter histAdapter;
+    protected MaterialButton okButton;
+    protected MaterialButton clearButton;
     protected RecyclerView resultList;
 
-    public HistoryFragment(){
-        // empty constructor
-    }
+    protected CalculatorActivity activity;
 
-    public void createAdapter(){
-        this.histAdapter = new HistoryAdapter(this);
+    protected HistoryAdapter adapter;
+    protected HistoryPresenter presenter;
+
+    public HistoryFragment() {
+        // empty constructor
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_history,container);
-        this.btn = view.findViewById(R.id.history_btn);
+
+        this.okButton = view.findViewById(R.id.history_btn);
+        this.clearButton = view.findViewById(R.id.clear_history_btn);
         this.resultList = view.findViewById(R.id.history_list);
-        this.resultList.setAdapter(this.histAdapter);
+
+        this.presenter = new HistoryPresenter();
+        this.adapter = new HistoryAdapter(this.presenter);
+        this.resultList.setAdapter(adapter);
         this.resultList.setLayoutManager(new LinearLayoutManager(getContext()));
-        this.btn.setOnClickListener(this);
-        Log.i("test", "onCreateView: ");
+
+        List<OperandResult> list = this.getArguments().getParcelableArrayList("histories");
+
+        for (OperandResult result: list) {
+            this.addOperandResult(result);
+        }
+
+        this.okButton.setOnClickListener(this);
+        this.clearButton.setOnClickListener(this);
+
         return view;
     }
 
     @Override
     public void onClick(View view){
-        if(view.getId()==this.btn.getId()){
+        int id = view.getId();
+
+        if (id == this.okButton.getId()){
             this.closeDialog();
+        } else if (id == this.clearButton.getId()) {
+            this.clearHistory();
+            this.activity.clearHistory();
         }
     }
 
-    public void addResult(OperandResult res){this.histAdapter.addResult(res);}
-
-    public void closeDialog(){this.dismiss();}
+    public void closeDialog() {
+        this.dismiss();
+    }
 
     @Override
     public void onAttach(Context context) {
@@ -66,9 +87,21 @@ public class HistoryFragment extends DialogFragment implements View.OnClickListe
         }
     }
 
-    public static HistoryFragment createHistoryFragment(){
+    private void addOperandResult(OperandResult result) {
+        this.presenter.addOperandResult(result);
+        this.adapter.notifyDataSetChanged();
+    }
+
+    private void clearHistory() {
+        this.presenter.clearOperandResult();
+        this.adapter.notifyDataSetChanged();
+    }
+
+    public static HistoryFragment createHistoryFragment(List<OperandResult> list) {
         HistoryFragment hf = new HistoryFragment();
-        hf.createAdapter();
+        Bundle bundle = new Bundle();
+        bundle.putParcelableArrayList("histories", (ArrayList<OperandResult>)list);
+        hf.setArguments(bundle);
         return hf;
     }
 }

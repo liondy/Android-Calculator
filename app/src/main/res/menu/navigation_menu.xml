@@ -2,17 +2,13 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <group android:id="@+id/group_file">
         <item
-            android:icon="@drawable/ic_save_black_24dp"
-            android:id="@+id/save_menu"
-            android:title="@string/save_label" />
-        <item
-            android:icon="@drawable/ic_folder_open_black_24dp"
-            android:id="@+id/load_menu"
-            android:title="@string/load_label" />
+            android:icon="@drawable/ic_assessment_black_24dp"
+            android:id="@+id/result_menu"
+            android:title="@string/result_label" />
         <item
             android:icon="@drawable/ic_not_interested_black_24dp"
             android:id="@+id/clear_menu"
-            android:title="@string/reset_label" />
+            android:title="@string/clear_label" />
         <item
             android:icon="@drawable/ic_history_black_24dp"
             android:id="@+id/history_menu"

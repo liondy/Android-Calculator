@@ -7,19 +7,12 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Date;
 
 public class OperandPresenter {
     private List<Operand> operands;
-    private List<OperandResult> operandRes;
 
     public OperandPresenter() {
         this.operands = new ArrayList<>();
-        this.operandRes = new ArrayList<>();
-    }
-
-    public List getList() {
-        return this.operands;
     }
 
     public List<Operand> getOperands() {
@@ -39,17 +32,6 @@ public class OperandPresenter {
     public void deleteOperand(int idx) {
         this.operands.remove(idx);
         this.setPrevValues(idx, this.operands.size() - 1);
-    }
-
-    public OperandResult addResult() {
-        OperandResult res = null;
-        if (this.operands.size() != 0) {
-            Operand temp = this.operands.get(this.operands.size() - 1);
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd G 'at' HH:mm:ss z");
-            res = new OperandResult(temp.getTotalValue(),sdf.format(new Date()));
-            this.operandRes.add(res);
-        }
-        return res;
     }
 
     public void clear() {

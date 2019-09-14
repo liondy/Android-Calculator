@@ -13,22 +13,24 @@ import android.view.MenuItem;
 import android.view.Window;
 import android.widget.Toast;
 
+import com.example.calculatingwombat.fragments.HistoryFragment;
 import com.example.calculatingwombat.fragments.MainFragment;
 import com.example.calculatingwombat.fragments.OperandFragment;
 import com.example.calculatingwombat.interfaces.CalculatorActivity;
 import com.example.calculatingwombat.model.Operand;
+import com.example.calculatingwombat.model.OperandResult;
 import com.example.calculatingwombat.storage.Storage;
 import com.google.android.material.navigation.NavigationView;
-import com.example.calculatingwombat.storage.CommaSettings;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, CalculatorActivity {
     FragmentManager fragmentManager;
     MainFragment mainFragment;
 
-    CommaSettings commaSettings;
-    Storage storage;
+    DrawerLayout drawerLayout;
 
-    boolean save;
+    Storage storage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,14 +43,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         this.mainFragment = (MainFragment)this.fragmentManager.findFragmentById(R.id.main_fragment);
 
-        this.commaSettings = new CommaSettings(this);
-
-        NavigationView navigationView = (NavigationView) findViewById(R.id.navigationMenu);
+        NavigationView navigationView = this.findViewById(R.id.navigationMenu);
         navigationView.setNavigationItemSelectedListener(this);
 
         this.storage = new Storage(this);
-
-        this.save = false;
     }
 
     @Override
@@ -56,6 +54,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         String tag = this.getResources().getString(R.string.operand_fragment_label);
         OperandFragment operandFragment = OperandFragment.createOperandFragment();
         operandFragment.show(this.fragmentManager, tag);
+    }
+
+    @Override
+    public void clearHistory() {
+        this.storage.clearHistory();
     }
 
     @Override
@@ -72,84 +75,84 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         this.setSupportActionBar(toolbar);
 
-        DrawerLayout drawerLayout = this.findViewById(R.id.drawer_layout);
+        this.drawerLayout = this.findViewById(R.id.drawer_layout);
 
         ActionBarDrawerToggle toggle =  new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.app_name, R.string.app_name);
 
-        drawerLayout.addDrawerListener(toggle);
+        this.drawerLayout.addDrawerListener(toggle);
 
         toggle.syncState();
     }
 
     @Override
-    public void onBackPressed(){
-        this.closeProgram();
+    public void onBackPressed() {
+        this.finish();
     }
 
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         switch (item.getItemId()) {
-            case R.id.save_menu:
-                this.save();
+            case R.id.clear_menu:
+                this.handleClearMenu();
+                this.drawerLayout.closeDrawers();
                 return true;
-            case R.id.load_menu:
-                this.load();
+            case R.id.result_menu:
+                this.handleResultMenu();
+                this.drawerLayout.closeDrawers();
+                return true;
+            case R.id.history_menu:
+                this.drawerLayout.closeDrawers();
+                this.handleHistoryMenu();
                 return true;
             case R.id.exit_menu:
-                this.closeProgram();
+                this.finish();
                 return true;
             default:
                 return false;
         }
     }
 
-    private void save() {
-        super.onPause();
-        this.storage.setPresenter(mainFragment.getPresenter());
-        this.storage.saveList();
-        String msg = this.getResources().getString(R.string.save_toast);
-        Toast.makeText(this,msg,Toast.LENGTH_LONG).show();
-        this.save = true;
+    private void handleClearMenu() {
+        this.mainFragment.clearOperand();
+        this.storage.clearOperandList();
     }
 
-    private void load() {
+    private void handleResultMenu() {
+        OperandResult newResult = this.mainFragment.processResult();
+        if (newResult != null) {
+            this.storage.addNewHistory(newResult);
+        }
+    }
+
+    private void handleHistoryMenu() {
+        List<OperandResult> list = this.storage.getHistories();
+        String tag = "History Fragment";
+        HistoryFragment fragment = HistoryFragment.createHistoryFragment(list);
+        fragment.show(this.fragmentManager, tag);
+    }
+
+    @Override
+    protected void onResume() {
         super.onResume();
-        Operand[] list = this.storage.loadList();
-        int i;
-        for (i = 0; i < list.length; i++){
-            this.mainFragment.addOperand(list[i]);
+
+        List<Operand> operandList = this.storage.getOperandList();
+
+        if (operandList.size() > 0) {
+            for (Operand operand: operandList) {
+                this.mainFragment.addOperand(operand);
+            }
+
+            this.mainFragment.setResultText(operandList.get(operandList.size() - 1));
         }
     }
 
-    private void closeProgram() {
-        if (!save) {
-            final AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-            String confirmation = this.getResources().getString(R.string.exit_confirmation);
-            builder.setMessage(confirmation);
-            builder.setCancelable(true);
-            String no = this.getResources().getString(R.string.alert_no);
-            builder.setNegativeButton(no, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    finish();
-                    moveTaskToBack(true);
-                }
-            });
-            String yes = this.getResources().getString(R.string.alert_yes);
-            builder.setPositiveButton(yes, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    save();
-                    finish();
-                    moveTaskToBack(true);
-                }
-            });
-            AlertDialog alertDialog = builder.create();
-            alertDialog.show();
-        } else{
-            finish();
-            moveTaskToBack(true);
-        }
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        List<Operand> operandList = this.mainFragment.getOperandList();
+
+        this.storage.saveOperands(operandList);
     }
 }

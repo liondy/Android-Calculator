@@ -4,14 +4,14 @@
     android:id="@+id/history_layout"
     android:layout_height="match_parent"
     android:layout_width="match_parent"
-    android:orientation="vertical"
     android:minWidth="350dp"
+    android:orientation="vertical"
     android:padding="@dimen/content_padding">
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="@dimen/title_size"
-        android:text="Your History"
+        android:text="@string/history_title"
         android:layout_margin="@dimen/spacing_margin"/>
 
     <androidx.recyclerview.widget.RecyclerView
@@ -31,6 +31,15 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"/>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/clear_history_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:theme="@style/ButtonPrimaryTheme"
+            android:text="@string/clear_label" />
+        <Space
+            android:layout_width="@dimen/half_spacer_width"
+            android:layout_height="match_parent" />
         <com.google.android.material.button.MaterialButton
             android:id="@+id/history_btn"
             android:layout_width="wrap_content"

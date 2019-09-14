@@ -22,24 +22,6 @@
         android:orientation="vertical"
         android:layout_below="@id/calculator_result" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/clear_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentBottom="true"
-        android:text="@string/clear_label"
-        android:theme="@style/ButtonPrimaryTheme" />
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/result_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:text="@string/result_label"
-        android:theme="@style/ButtonPrimaryTheme" />
-
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -50,7 +32,6 @@
         android:theme="@style/ButtonPrimaryTheme"
         app:borderWidth="@dimen/zero"
         app:elevation="@dimen/zero" />
-
 
 </RelativeLayout>
 

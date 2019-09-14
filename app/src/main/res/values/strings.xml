@@ -1,7 +1,5 @@
 <resources>
     <string name="app_name">Calculating Wombat</string>
-    <string name="save_label">Save</string>
-    <string name="load_label">Load</string>
     <string name="reset_label">Reset</string>
     <string name="history_label">History</string>
     <string name="exit_label">Exit</string>
@@ -10,10 +8,11 @@
     <string name="operand_label">Operand</string>
     <string name="ok_label">OK</string>
     <string name="cancel_label">Cancel</string>
-    <string name="settings_label">Settings</string>
+
+    <string name="history_title">Your History</string>
 
     <string name="clear_label">Clear</string>
-    <string name="result_label">Result</string>
+    <string name="result_label">Show Result</string>
 
     <string name="apply_label">Apply</string>
 
