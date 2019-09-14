@@ -2,6 +2,7 @@ package com.example.calculatingwombat.storage;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import com.example.calculatingwombat.MainActivity;
 import com.example.calculatingwombat.fragments.MainFragment;
@@ -32,8 +33,8 @@ public class Storage {
         editor.putInt("size",this.arrOperand.size());
         int i;
         for (i=0;i<this.arrOperand.size();i++){
-            editor.putString("operand", String.valueOf(this.arrOperand.get(i).getOperand()));
-            editor.putString("operator",String.valueOf(this.arrOperand.get(i).getOperator()));
+            editor.putString("operand"+i, String.valueOf(this.arrOperand.get(i).getOperand()));
+            editor.putString("operator"+i,String.valueOf(this.arrOperand.get(i).getOperator()));
         }
         editor.apply();
     }
@@ -43,7 +44,7 @@ public class Storage {
         Operand[] newList = new Operand[this.sharedPreferences.getInt("size",0)];
         int i;
         for (i=0;i<newList.length;i++){
-            Operand o = new Operand(this.sharedPreferences.getString("operator",""),this.sharedPreferences.getString("operand",""));
+            Operand o = new Operand(this.sharedPreferences.getString("operator"+i,""),this.sharedPreferences.getString("operand"+i,""));
             newList[i]=o;
         }
         return newList;

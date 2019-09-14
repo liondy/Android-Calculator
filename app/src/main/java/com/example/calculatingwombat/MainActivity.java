@@ -96,16 +96,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     @Override
+    public void onBackPressed(){
+        closeProgram();
+    }
+
+    @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
-        Log.d("tag","lololo");
         switch (item.getItemId()) {
             case R.id.save_menu:
                 save();
                 return true;
             case R.id.load_menu:
                 load();
-                Log.d("tag", "load");
                 return true;
             case R.id.settings:
                 Log.d("tag","settings");
@@ -114,7 +117,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 closeProgram();
                 return true;
             default:
-                Log.d("tag", item.getItemId() + "");
                 return false;
         }
     }
@@ -122,11 +124,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void save(){
         super.onPause();
         this.s.setPresenter(mainFragment.getPresenter());
-//        int i;
-//        for (i=0;i<this.s.getSize();i++){
-            this.s.sharedPreferences.edit().remove("operand").apply();
-            this.s.sharedPreferences.edit().remove("operator").apply();
-//        }
+        this.s.sharedPreferences.edit().remove("operand").apply();
+        this.s.sharedPreferences.edit().remove("operator").apply();
         this.s.sharedPreferences.edit().apply();
         this.s.saveList();
         Toast.makeText(this,"Calculation Saved",Toast.LENGTH_LONG).show();
