@@ -20,7 +20,7 @@ public class ResultHolder extends RecyclerView.ViewHolder {
     }
 
     public void setText(OperandResult op){
-        this.result.setText(Double.toString(op.getValue()));
+        this.result.setText(op.getFormattedValue());
         this.date.setText(op.getDate());
     }
 }

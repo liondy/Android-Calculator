@@ -35,7 +35,6 @@ public class HistoryAdapter extends RecyclerView.Adapter<ResultHolder> {
     }
 
     public void addResult(OperandResult or){
-        Log.i("masuk", "addResult: ");
         this.resultHist.add(or);
         this.notifyDataSetChanged();
     }

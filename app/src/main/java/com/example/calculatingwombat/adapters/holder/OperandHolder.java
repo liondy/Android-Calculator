@@ -29,7 +29,7 @@ public class OperandHolder extends RecyclerView.ViewHolder implements View.OnCli
     }
 
     @Override
-    public void onClick(View view){
+    public void onClick(View view) {
         int id = view.getId();
 
         if (id == this.deleteButton.getId()) {
@@ -38,7 +38,7 @@ public class OperandHolder extends RecyclerView.ViewHolder implements View.OnCli
     }
 
     public void setText(Operand operand) {
-        this.operandResult.setText(Double.toString(operand.getTotalValue()));
+        this.operandResult.setText(operand.getFormattedValue());
         this.operandString.setText(Double.toString(operand.getCurrentValue()));
         this.operatorSymbol.setText("(" + operand.getOperator() + ")");
     }

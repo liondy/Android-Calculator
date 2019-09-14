@@ -9,31 +9,24 @@ import androidx.fragment.app.FragmentManager;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.Window;
 import android.widget.Toast;
 
 import com.example.calculatingwombat.fragments.MainFragment;
 import com.example.calculatingwombat.fragments.OperandFragment;
-import com.example.calculatingwombat.fragments.SettingsFragment;
 import com.example.calculatingwombat.interfaces.CalculatorActivity;
 import com.example.calculatingwombat.model.Operand;
-import com.example.calculatingwombat.presenter.OperandPresenter;
 import com.example.calculatingwombat.storage.Storage;
 import com.google.android.material.navigation.NavigationView;
 import com.example.calculatingwombat.storage.CommaSettings;
-
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, CalculatorActivity {
     FragmentManager fragmentManager;
     MainFragment mainFragment;
 
     CommaSettings commaSettings;
-    Storage s;
+    Storage storage;
 
     boolean save;
 
@@ -53,7 +46,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         NavigationView navigationView = (NavigationView) findViewById(R.id.navigationMenu);
         navigationView.setNavigationItemSelectedListener(this);
 
-        this.s = new Storage(this);
+        this.storage = new Storage(this);
 
         this.save = false;
     }
@@ -63,13 +56,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         String tag = this.getResources().getString(R.string.operand_fragment_label);
         OperandFragment operandFragment = OperandFragment.createOperandFragment();
         operandFragment.show(this.fragmentManager, tag);
-    }
-
-
-    public void showSettingsDialog() {
-        String tag = this.getResources().getString(R.string.settings_fragment_label);
-        SettingsFragment settingsFragment = SettingsFragment.createSettingsFragment();
-        settingsFragment.show(this.fragmentManager, tag);
     }
 
     @Override
@@ -97,7 +83,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public void onBackPressed(){
-        closeProgram();
+        this.closeProgram();
     }
 
     @Override
@@ -105,44 +91,41 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // Handle navigation view item clicks here.
         switch (item.getItemId()) {
             case R.id.save_menu:
-                save();
+                this.save();
                 return true;
             case R.id.load_menu:
-                load();
-                return true;
-            case R.id.settings:
-                Log.d("tag","settings");
+                this.load();
                 return true;
             case R.id.exit_menu:
-                closeProgram();
+                this.closeProgram();
                 return true;
             default:
                 return false;
         }
     }
 
-    private void save(){
+    private void save() {
         super.onPause();
-        this.s.setPresenter(mainFragment.getPresenter());
-        this.s.sharedPreferences.edit().remove("operand").apply();
-        this.s.sharedPreferences.edit().remove("operator").apply();
-        this.s.sharedPreferences.edit().apply();
-        this.s.saveList();
+        this.storage.setPresenter(mainFragment.getPresenter());
+        this.storage.sharedPreferences.edit().remove("operand").apply();
+        this.storage.sharedPreferences.edit().remove("operator").apply();
+        this.storage.sharedPreferences.edit().apply();
+        this.storage.saveList();
         Toast.makeText(this,"Calculation Saved",Toast.LENGTH_LONG).show();
-        this.save=true;
+        this.save = true;
     }
 
-    private void load(){
+    private void load() {
         super.onResume();
-        Operand[] list = this.s.loadList();
+        Operand[] list = this.storage.loadList();
         int i;
-        for (i=0;i<list.length;i++){
+        for (i = 0; i < list.length; i++){
             this.mainFragment.addOperand(list[i]);
         }
     }
 
-    private void closeProgram(){
-        if(!save){
+    private void closeProgram() {
+        if (!save) {
             final AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
             builder.setMessage("Do you want to save your calculation?");
             builder.setCancelable(true);
@@ -163,8 +146,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             });
             AlertDialog alertDialog = builder.create();
             alertDialog.show();
-        }
-        else{
+        } else{
             finish();
             moveTaskToBack(true);
         }

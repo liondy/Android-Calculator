@@ -1,7 +1,5 @@
 package com.example.calculatingwombat.model;
 
-import java.util.Stack;
-
 public class Operand {
     private double prevValue;
     private char operator;
@@ -79,5 +77,10 @@ public class Operand {
 
     public double getOperand(){
         return this.operand;
+    }
+
+    public String getFormattedValue() {
+        String format = "%.2f";
+        return String.format(format, this.getTotalValue());
     }
 }

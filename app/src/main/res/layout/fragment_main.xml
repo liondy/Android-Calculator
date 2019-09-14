@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:textAlignment="textEnd"
         android:textSize="@dimen/calc_size"
-        android:text="000.000"
+        android:text="0.00"
         android:layout_marginBottom="@dimen/spacing_margin" />
 
     <androidx.recyclerview.widget.RecyclerView

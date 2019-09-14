@@ -21,6 +21,10 @@ public class CommaSettings {
     }
 
     public int loadSettings() {
+        if (!this.sharedPreferences.contains(KEY)) {
+            this.saveSettings(0);
+        }
+
         return map[sharedPreferences.getInt(KEY, 0)];
     }
 }

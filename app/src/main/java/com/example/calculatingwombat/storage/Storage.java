@@ -19,7 +19,7 @@ public class Storage {
     protected List<Operand> arrOperand;
     protected OperandPresenter op;
 
-    public Storage(Context context){
+    public Storage(Context context) {
         this.sharedPreferences = context.getSharedPreferences("App_settings",0);
     }
 
@@ -28,18 +28,18 @@ public class Storage {
         this.arrOperand = op.getList();
     }
 
-    public void saveList(){
+    public void saveList() {
         SharedPreferences.Editor editor = this.sharedPreferences.edit();
         editor.putInt("size",this.arrOperand.size());
         int i;
-        for (i=0;i<this.arrOperand.size();i++){
-            editor.putString("operand"+i, String.valueOf(this.arrOperand.get(i).getOperand()));
-            editor.putString("operator"+i,String.valueOf(this.arrOperand.get(i).getOperator()));
+        for (i = 0; i < this.arrOperand.size(); i++) {
+            editor.putString("operand" + i, String.valueOf(this.arrOperand.get(i).getOperand()));
+            editor.putString("operator" + i,String.valueOf(this.arrOperand.get(i).getOperator()));
         }
         editor.apply();
     }
 
-    public Operand[] loadList(){
+    public Operand[] loadList() {
 
         Operand[] newList = new Operand[this.sharedPreferences.getInt("size",0)];
         int i;

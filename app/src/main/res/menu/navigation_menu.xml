@@ -20,10 +20,6 @@
     </group>
     <group android:id="@+id/group_app">
         <item
-            android:icon="@drawable/ic_settings_black_24dp"
-            android:id="@+id/settings"
-            android:title="@string/settings_label" />
-        <item
             android:icon="@drawable/ic_exit_to_app_black_24dp"
             android:id="@+id/exit_menu"
             android:title="@string/exit_label" />

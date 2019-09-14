@@ -113,7 +113,7 @@ public class MainFragment extends Fragment implements View.OnClickListener {
         try {
             this.tv_res.setText(Double.toString(result.getValue()));
         } catch (NullPointerException e){
-            this.tv_res.setText("000.000");
+            this.tv_res.setText("0.00");
         }
     }
 

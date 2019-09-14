@@ -1,13 +1,8 @@
 package com.example.calculatingwombat.presenter;
 
-import android.util.Log;
-
-import com.example.calculatingwombat.adapters.OperandAdapter;
-import com.example.calculatingwombat.interfaces.CalculatorActivity;
 import com.example.calculatingwombat.model.Operand;
 import com.example.calculatingwombat.model.OperandResult;
 
-import java.util.Calendar;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -23,13 +18,8 @@ public class OperandPresenter {
         this.operandRes = new ArrayList<>();
     }
 
-    public void setList(List<Operand> operands) {
-        Collections.copy(this.operands, operands);
-    }
-
-    public List getList(){
-        final List<Operand> operands = this.operands;
-        return operands;
+    public List getList() {
+        return this.operands;
     }
 
     public List<Operand> getOperands() {
@@ -51,15 +41,14 @@ public class OperandPresenter {
         this.setPrevValues(idx, this.operands.size() - 1);
     }
 
-    public OperandResult addResult(){
+    public OperandResult addResult() {
         OperandResult res = null;
         if (this.operands.size() != 0) {
             Operand temp = this.operands.get(this.operands.size() - 1);
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd G 'at' HH:mm:ss z");
-            Log.i("date: ", sdf.format(new Date()));
             res = new OperandResult(temp.getTotalValue(),sdf.format(new Date()));
             this.operandRes.add(res);
-    }
+        }
         return res;
     }
 
