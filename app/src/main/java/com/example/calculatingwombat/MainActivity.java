@@ -107,11 +107,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void save() {
         super.onPause();
         this.storage.setPresenter(mainFragment.getPresenter());
-        this.storage.sharedPreferences.edit().remove("operand").apply();
-        this.storage.sharedPreferences.edit().remove("operator").apply();
-        this.storage.sharedPreferences.edit().apply();
         this.storage.saveList();
-        Toast.makeText(this,"Calculation Saved",Toast.LENGTH_LONG).show();
+        String msg = this.getResources().getString(R.string.save_toast);
+        Toast.makeText(this,msg,Toast.LENGTH_LONG).show();
         this.save = true;
     }
 
@@ -127,16 +125,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void closeProgram() {
         if (!save) {
             final AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-            builder.setMessage("Do you want to save your calculation?");
+            String confirmation = this.getResources().getString(R.string.exit_confirmation);
+            builder.setMessage(confirmation);
             builder.setCancelable(true);
-            builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            String no = this.getResources().getString(R.string.alert_no);
+            builder.setNegativeButton(no, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
                     finish();
                     moveTaskToBack(true);
                 }
             });
-            builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            String yes = this.getResources().getString(R.string.alert_yes);
+            builder.setPositiveButton(yes, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
                     save();

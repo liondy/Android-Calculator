@@ -23,6 +23,12 @@
 
     <string name="settings_fragment_label">Settings Fragment</string>
 
+    <string name="save_toast">Calculation Saved</string>
+    <string name="alert_no">No</string>
+    <string name="alert_yes">Yes</string>
+
+    <string name="exit_confirmation">Do you want to save your calculation?</string>
+
     <string-array name="operator_array">
         <item name="plus">+</item>
         <item name="minus">-</item>
