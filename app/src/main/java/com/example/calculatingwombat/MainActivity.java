@@ -86,13 +86,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public void onBackPressed() {
-        this.finish();
+        this.askBeforePausing();
     }
 
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         switch (item.getItemId()) {
+            case R.id.save_menu:
+                this.handleSaveMenu();
+                this.drawerLayout.closeDrawers();
+                return true;
             case R.id.clear_menu:
                 this.handleClearMenu();
                 this.drawerLayout.closeDrawers();
@@ -102,15 +106,54 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 this.drawerLayout.closeDrawers();
                 return true;
             case R.id.history_menu:
-                this.drawerLayout.closeDrawers();
                 this.handleHistoryMenu();
                 return true;
             case R.id.exit_menu:
-                this.finish();
+                this.askBeforePausing();
                 return true;
             default:
                 return false;
         }
+    }
+
+    private void askBeforePausing() {
+        if (!this.mainFragment.getSaveStatus()) {
+            AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
+            alertDialog.setTitle("Save before quitting?");
+            alertDialog.setMessage("It seems you haven't saved your results, would you like to save before quitting?");
+            alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "YES",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            handleSaveMenu();
+                            dialog.dismiss();
+                            finish();
+                        }
+                    });
+            alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "NO",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                            finish();
+                        }
+                    });
+            alertDialog.show();
+        } else {
+            this.finish();
+        }
+    }
+
+    private void handleSaveMenu() {
+        List<Operand> operandList = this.mainFragment.getOperandList();
+
+        this.storage.saveOperands(operandList);
+
+        this.mainFragment.saveStatus();
+
+        CharSequence text = "Calculation(s) saved";
+        int duration = Toast.LENGTH_SHORT;
+
+        Toast toast = Toast.makeText(this, text, duration);
+        toast.show();
     }
 
     private void handleClearMenu() {
@@ -144,15 +187,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
 
             this.mainFragment.setResultText(operandList.get(operandList.size() - 1));
+
+            CharSequence text = "Calculation(s) loaded";
+            int duration = Toast.LENGTH_SHORT;
+
+            Toast toast = Toast.makeText(this, text, duration);
+            toast.show();
         }
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-
-        List<Operand> operandList = this.mainFragment.getOperandList();
-
-        this.storage.saveOperands(operandList);
     }
 }

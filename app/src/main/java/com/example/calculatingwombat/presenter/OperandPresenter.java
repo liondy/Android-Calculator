@@ -1,18 +1,26 @@
 package com.example.calculatingwombat.presenter;
 
 import com.example.calculatingwombat.model.Operand;
-import com.example.calculatingwombat.model.OperandResult;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public class OperandPresenter {
     private List<Operand> operands;
+    private boolean save;
 
     public OperandPresenter() {
         this.operands = new ArrayList<>();
+        this.save = true;
+    }
+
+    public boolean getSave() {
+        return this.save;
+    }
+
+    public void setSave(boolean saved) {
+        this.save = saved;
     }
 
     public List<Operand> getOperands() {
@@ -27,15 +35,18 @@ public class OperandPresenter {
         }
 
         this.operands.add(newOperand);
+        this.setSave(false);
     }
 
     public void deleteOperand(int idx) {
         this.operands.remove(idx);
         this.setPrevValues(idx, this.operands.size() - 1);
+        this.setSave(false);
     }
 
     public void clear() {
         this.operands.clear();
+        this.setSave(false);
     }
 
     public void swapOperand(int index1, int index2) {
@@ -48,6 +59,7 @@ public class OperandPresenter {
         }
 
         this.setPrevValues(index1, index2);
+        this.setSave(false);
     }
 
     private void setPrevValues(int from, int to) {

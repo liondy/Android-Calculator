@@ -22,6 +22,8 @@
 
     <string name="settings_fragment_label">Settings Fragment</string>
 
+    <string name="save_label">Save</string>
+
     <string name="save_toast">Calculation Saved</string>
     <string name="alert_no">No</string>
     <string name="alert_yes">Yes</string>

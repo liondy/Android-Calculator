@@ -46,7 +46,6 @@ public class MainFragment extends Fragment implements View.OnClickListener {
         // Required empty public constructor
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -132,5 +131,13 @@ public class MainFragment extends Fragment implements View.OnClickListener {
 
     public List<Operand> getOperandList() {
         return this.presenter.getOperands();
+    }
+
+    public boolean getSaveStatus() {
+        return this.presenter.getSave();
+    }
+
+    public void saveStatus() {
+        this.presenter.setSave(true);
     }
 }
