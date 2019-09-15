@@ -180,13 +180,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onResume();
 
         List<Operand> operandList = this.storage.getOperandList();
+        List<OperandResult> operandResultList = this.storage.getHistories();
 
         if (operandList.size() > 0) {
             for (Operand operand: operandList) {
                 this.mainFragment.addOperand(operand);
             }
 
-            this.mainFragment.setResultText(operandList.get(operandList.size() - 1));
+            if (operandResultList.size() > 0) {
+                this.mainFragment.setResultText(operandResultList.get(operandResultList.size() - 1));
+            }
 
             CharSequence text = "Calculation(s) loaded";
             int duration = Toast.LENGTH_SHORT;

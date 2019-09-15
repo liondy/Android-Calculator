@@ -109,13 +109,13 @@ public class MainFragment extends Fragment implements View.OnClickListener {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd G 'at' HH:mm:ss z");
         Operand lastOperand = this.presenter.getOperands().get(this.presenter.getOperands().size() - 1);
 
-        this.setResultText(lastOperand);
+        OperandResult result = new OperandResult(lastOperand.getTotalValue(),sdf.format(new Date()));
 
-        return new OperandResult(lastOperand.getTotalValue(),sdf.format(new Date()));
+        return result;
     }
 
-    public void setResultText(Operand lastOperand) {
-        this.tv_res.setText(lastOperand.getFormattedValue());
+    public void setResultText(OperandResult result) {
+        this.tv_res.setText(result.getFormattedValue());
     }
 
     public void clearOperand() {
