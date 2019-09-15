@@ -193,6 +193,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             Toast toast = Toast.makeText(this, text, duration);
             toast.show();
+
+            this.mainFragment.saveStatus();
         }
     }
 }
