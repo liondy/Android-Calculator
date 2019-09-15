@@ -187,10 +187,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 this.mainFragment.addOperand(operand);
             }
 
-            if (operandResultList.size() > 0) {
-                this.mainFragment.setResultText(operandResultList.get(operandResultList.size() - 1));
-            }
-
             CharSequence text = "Calculation(s) loaded";
             int duration = Toast.LENGTH_SHORT;
 
@@ -198,6 +194,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             toast.show();
 
             this.mainFragment.saveStatus();
+        }
+
+        if (operandResultList.size() > 0) {
+            this.mainFragment.setResultText(operandResultList.get(operandResultList.size() - 1));
         }
     }
 }
