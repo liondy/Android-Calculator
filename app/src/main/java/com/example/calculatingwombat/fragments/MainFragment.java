@@ -111,6 +111,8 @@ public class MainFragment extends Fragment implements View.OnClickListener {
 
         OperandResult result = new OperandResult(lastOperand.getTotalValue(),sdf.format(new Date()));
 
+        this.setResultText(result);
+
         return result;
     }
 
